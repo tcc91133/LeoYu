@@ -1,19 +1,22 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using DG.Tweening;
 
 public class PlayerDash : MonoBehaviour
 {
     [SerializeField] private float dashDistance = 5f;
     [SerializeField] private float dashDuration = 0.2f;
-    [SerializeField] private float dashCooldown = 1f; 
+    [SerializeField] private float dashCooldown = 1f;
     private Vector2 _lastDirection;
-    private bool _canDash = true; 
+    private bool _canDash = true;
 
-    public void Dash(InputAction.CallbackContext context)
+    private void Update()
     {
-        if (context.performed && _canDash)
+
+        _lastDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+
+
+        if (Input.GetKeyDown(KeyCode.Space) && _canDash)
         {
             if (_lastDirection != Vector2.zero)
             {
@@ -30,15 +33,10 @@ public class PlayerDash : MonoBehaviour
 
     private IEnumerator DashCoroutine(Vector2 direction)
     {
-        _canDash = false; 
+        _canDash = false;
         MoveCharacter(direction);
         yield return new WaitForSeconds(dashDuration);
-        yield return new WaitForSeconds(dashCooldown); 
-        _canDash = true; 
-    }
-
-    private void Update()
-    {
-        _lastDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+        yield return new WaitForSeconds(dashCooldown);
+        _canDash = true;
     }
 }
