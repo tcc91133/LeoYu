@@ -1,4 +1,0 @@
-repository "Bolocure@mick60213@cloud"
-  path "/"
-    br "/main"
-    co "/main"

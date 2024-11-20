@@ -5,17 +5,15 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
-  - PlayerProjectile
-  - spawnObject
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - player
+  - 
   - Water
   - UI
-  - wall
-  - Enemy
+  - 
+  - 
   - 
   - 
   - 
@@ -41,9 +39,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: bg
+    uniqueID: 4192391461
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: BG
-    uniqueID: 3219402527
+  - name: enemy
+    uniqueID: 2381337179
+    locked: 0
+  - name: player
+    uniqueID: 2110882685
+    locked: 0
+  - name: ui
+    uniqueID: 904114039
     locked: 0
