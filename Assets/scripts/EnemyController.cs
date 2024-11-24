@@ -27,7 +27,7 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        target = FindObjectOfType<PlayerController>().transform;
+        //target = FindObjectOfType<PlayerController>().transform;
         //target = PlayerHealthController.instance.transform;
     }
 
