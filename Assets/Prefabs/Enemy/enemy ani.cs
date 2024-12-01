@@ -24,6 +24,7 @@ public class enemyani : MonoBehaviour
         }
     }
 
+
     private void Update()
     {
         if (player != null)

@@ -34,7 +34,7 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        theRB.velocity = (target.position - transform.position).normalized * moveSpeed;
+        /*theRB.velocity = (target.position - transform.position).normalized * moveSpeed;
         {
             if (hitCounter>0f) 
             {
@@ -88,7 +88,7 @@ public class EnemyController : MonoBehaviour
         {
             Destroy(gameObject);   
 
-            //ExperienceLevelController.instance.SpawnExp(transform.position, expToGive);
+            ExperienceLevelController.instance.SpawnExp(transform.position, expToGive);
 
             /*Destroy(gameObject);
 
