@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour
 {
@@ -19,6 +20,12 @@ public class UIController : MonoBehaviour
 
     public GameObject levelUpPanel;
 
+    public TMP_Text timeText;
+
+    public GameObject levelEndScreen;
+    public TMP_Text endTimeText;
+
+    public string mainMenuName;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,5 +49,20 @@ public class UIController : MonoBehaviour
     {
         levelUpPanel.SetActive(false);
         Time.timeScale = 1f;
+    }
+    public void UpdateTimer(float time)
+    {
+        float minutes =Mathf.FloorToInt( time / 60f);
+        float seconds = Mathf.FloorToInt(time % 60);
+
+        timeText.text = "Time: " + minutes + ":" + seconds.ToString("00");
+    }
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene(mainMenuName);
+    }
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

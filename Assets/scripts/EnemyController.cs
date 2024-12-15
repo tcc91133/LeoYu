@@ -40,9 +40,9 @@ public class EnemyController : MonoBehaviour
             {
                 hitCounter-=Time.deltaTime;
             }
-        }
-        //if (PlayerController.instance.gameObject.activeSelf == true)
-        //{
+        }*/
+        if (PlayerController.instance.gameObject.activeSelf == true)
+        {
             if (knockBackCounter > 0)
             {
                 knockBackCounter -= Time.deltaTime;
@@ -57,8 +57,9 @@ public class EnemyController : MonoBehaviour
                     moveSpeed = Mathf.Abs(moveSpeed * .5f);
                 }
             }
+        }
 
-            theRB.velocity = (target.position - transform.position).normalized * moveSpeed;
+            /*theRB.velocity = (target.position - transform.position).normalized * moveSpeed;
 
             if (hitCounter >= 0f)
             {
