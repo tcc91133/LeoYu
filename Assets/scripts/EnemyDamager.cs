@@ -14,10 +14,10 @@ public class EnemyDamager : MonoBehaviour
 
     public bool destroyParent;
 
+    //zone
     public bool damageOverTime;
     public float timeBetweenDamage;
     private float damageCounter;
-
     private List<EnemyController> enemiesInRange = new List<EnemyController>();
 
     public bool destroyOnImpact;
@@ -53,7 +53,8 @@ public class EnemyDamager : MonoBehaviour
             }
         }
 
-        /*if (damageOverTime == true)
+        //zone
+        if (damageOverTime == true)
         {
             damageCounter -= Time.deltaTime;
 
@@ -74,17 +75,17 @@ public class EnemyDamager : MonoBehaviour
                     }
                 }
             }
-        }*/
+        }
     }
 
-    /*private void OnTriggerEnter2D(Collider2D collision)
+    //zone
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (damageOverTime == false)
         {
             if (collision.tag == "Enemy")
             {
                 collision.GetComponent<EnemyController>().TakeDamage(damageAmount, shouldKnockBack);
-
                 if (destroyOnImpact)
                 {
                     Destroy(gameObject);
@@ -98,9 +99,9 @@ public class EnemyDamager : MonoBehaviour
                 enemiesInRange.Add(collision.GetComponent<EnemyController>());
             }
         }
-    }*/
-
-    /*private void OnTriggerExit2D(Collider2D collision)
+    }
+    //zone
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (damageOverTime == true)
         {
@@ -109,13 +110,13 @@ public class EnemyDamager : MonoBehaviour
                 enemiesInRange.Remove(collision.GetComponent<EnemyController>());
             }
         }
-    }*/
-    private void OnTriggerExit2D(Collider2D collision)
+    }
+    /*private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == "Enemy") 
         {
             collision.GetComponent<EnemyController>().TakeDamage(damageAmount,shouldKnockBack);
         }
          
-    }
+    }*/
 }

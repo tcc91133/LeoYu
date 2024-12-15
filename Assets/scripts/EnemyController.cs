@@ -86,7 +86,7 @@ public class EnemyController : MonoBehaviour
         health -= damageToTake;
         if (health <= 0)
         {
-            Destroy(gameObject);   
+            Destroy(gameObject);
 
             ExperienceLevelController.instance.SpawnExp(transform.position, expToGive);
 
@@ -111,7 +111,7 @@ public class EnemyController : MonoBehaviour
     public void TakeDamage(float damageToTake, bool shouldKnockback)
     {
         TakeDamage(damageToTake);
-        if (shouldKnockback==true)
+        if (shouldKnockback == true)
         {
             knockBackCounter = knockBackTime;
         }

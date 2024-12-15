@@ -17,9 +17,16 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private SpriteRenderer spriteRenderer;
     public float pickupRange = 2f;
-    public Weapon activeWeapon;
+    //public Weapon activeWeapon;
 
-    [SerializeField] private List<Transform> mirrorObjects; // 存储需要翻转的子物体
+    public List<Weapon> unassignedWeapons, assignedWeapons;
+
+    public int maxWeapons = 3;
+
+    [HideInInspector]
+    public List<Weapon> fullyLevelledWeapons = new List<Weapon>();
+
+   [SerializeField] private List<Transform> mirrorObjects; // 存储需要翻转的子物体
     private Vector3[] originalPositions; // 存储原始位置
 
     void Start()
@@ -34,6 +41,12 @@ public class PlayerController : MonoBehaviour
         {
             originalPositions[i] = mirrorObjects[i].localPosition;
         }
+
+        if (assignedWeapons.Count == 0) 
+        {
+            AddWeapon(Random.Range(0, unassignedWeapons.Count));
+        }
+        
     }
 
     void Update()
@@ -77,5 +90,24 @@ public class PlayerController : MonoBehaviour
                 obj.localPosition = originalPositions[i]; // 保持原始位置
             }
         }
+    }
+    public void AddWeapon(int weaponNumber)
+    {
+        if (weaponNumber<unassignedWeapons.Count)
+        {
+            assignedWeapons.Add(unassignedWeapons[weaponNumber]);
+
+            unassignedWeapons[weaponNumber].gameObject.SetActive(true);
+            unassignedWeapons.RemoveAt(weaponNumber);
+        
+        }
+    
+    }
+    public void AddWeapon(Weapon weaponToAdd) 
+    {
+        weaponToAdd.gameObject.SetActive(true);
+
+        assignedWeapons.Add(weaponToAdd);
+        unassignedWeapons.Remove(weaponToAdd);
     }
 }

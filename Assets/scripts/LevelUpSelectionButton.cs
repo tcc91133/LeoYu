@@ -13,10 +13,20 @@ public class LevelUpSelectionButton : MonoBehaviour
 
     public void UpdataButtonDisplay(Weapon theWeapon)
     {
-        upgradeDescText.text = theWeapon.stats[theWeapon.weaponLevel].upgradeText;
-        weaponIcon.sprite = theWeapon.icon;
+        if (theWeapon.gameObject.activeSelf == true)
+        {
+            upgradeDescText.text = theWeapon.stats[theWeapon.weaponLevel].upgradeText;
+            weaponIcon.sprite = theWeapon.icon;
 
-        nameLevelText.text = theWeapon.name + " - Lvl " + theWeapon.weaponLevel;
+            nameLevelText.text = theWeapon.name + " - Lvl " + theWeapon.weaponLevel;
+        }
+        else
+        {
+            upgradeDescText.text = "Unlock " + theWeapon.name;
+            weaponIcon.sprite = theWeapon.icon;
+
+            nameLevelText.text = theWeapon.name;
+        }
         assignedWeapon = theWeapon;
     }
     /*if(theWeapon.gameObject.activeSelf == true)
@@ -36,13 +46,13 @@ public class LevelUpSelectionButton : MonoBehaviour
     {
         if(assignedWeapon != null)
         {
-            /*if(assignWeapon.gameObject.activeSelf == true)
-            {*/
-                assignedWeapon.Levelup();
-            /*}else
+            if(assignedWeapon.gameObject.activeSelf == true)
             {
-                PlayerController.instance.AddWeapon(assignWeapon);
-            }*/
+                assignedWeapon.Levelup();
+            }else
+            {
+                PlayerController.instance.AddWeapon(assignedWeapon);
+            }
             
 
             UIController.Instance.levelUpPanel.SetActive(false);
