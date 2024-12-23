@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,7 +28,7 @@ public class LevelManager : MonoBehaviour
         if (gameActive == true)
         {
             timer += Time.deltaTime;
-            UIController.Instance.UpdateTimer(timer);
+            UIController.instance.UpdateTimer(timer);
         }
     }
 
@@ -46,8 +46,8 @@ public class LevelManager : MonoBehaviour
         float minutes = Mathf.FloorToInt(timer / 60f);
         float seconds = Mathf.FloorToInt(timer % 60f);
 
-        UIController.Instance.endTimeText.text = minutes.ToString() + " mins ," + seconds.ToString("00" + " secs");
-        UIController.Instance.levelEndScreen.SetActive(true);
+        UIController.instance.endTimeText.text = minutes.ToString() + " mins ," + seconds.ToString("00" + " secs");
+        UIController.instance.levelEndScreen.SetActive(true);
 
     }
 }

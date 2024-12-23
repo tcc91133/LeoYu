@@ -44,7 +44,7 @@ public class ExperienceLevelController : MonoBehaviour
             LevelUp();
         }
 
-        UIController.Instance.UpdateExperience(currentExperience, expLevels[currentLevel],currentLevel);
+        UIController.instance.UpdateExperience(currentExperience, expLevels[currentLevel],currentLevel);
     }
 
     public void SpawnExp(Vector3 position,int expValue)
@@ -63,7 +63,7 @@ public class ExperienceLevelController : MonoBehaviour
             currentLevel = expLevels.Count - 1;
         }
 
-        UIController.Instance.levelUpPanel.SetActive(true);
+        UIController.instance.levelUpPanel.SetActive(true);
 
 
         Time.timeScale = 0f;
@@ -104,20 +104,20 @@ public class ExperienceLevelController : MonoBehaviour
 
         for(int i = 0;i < weaponsToUpgrade.Count; i++)
         {
-            UIController.Instance.levelUpButtons[i].UpdataButtonDisplay(weaponsToUpgrade[i]);
+            UIController.instance.levelUpButtons[i].UpdataButtonDisplay(weaponsToUpgrade[i]);
         }
 
-        for(int i = 0; i < UIController.Instance.levelUpButtons.Length; i++)
+        for(int i = 0; i < UIController.instance.levelUpButtons.Length; i++)
         {
             if(i < weaponsToUpgrade.Count)
             {
-                UIController.Instance.levelUpButtons[i].gameObject.SetActive(true);
+                UIController.instance.levelUpButtons[i].gameObject.SetActive(true);
             }else
             {
-                UIController.Instance.levelUpButtons[i].gameObject.SetActive(false);
+                UIController.instance.levelUpButtons[i].gameObject.SetActive(false);
             }
         }
 
-        //PlayerStatController.instance.UpdateDisplay();
+        PlayerStatController.instance.UpdateDisplay();
     }
 }

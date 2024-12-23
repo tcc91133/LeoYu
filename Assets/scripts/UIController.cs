@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,10 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour
 {
-    public static UIController Instance;
+    public static UIController instance;
     private void Awake()
     {
-        Instance = this;
+        instance = this;
     }
 
     public Slider explvlSlider;
@@ -20,12 +20,19 @@ public class UIController : MonoBehaviour
 
     public GameObject levelUpPanel;
 
+    public TMP_Text coinText;
+
+    public PlayerStatUpgradeDisplay moveSpeedUpgradeDisplay, healthUpgradeDisplay, pickupRangeUpgradeDisplay, maxWeaponsUpgradeDispaly;
+
     public TMP_Text timeText;
 
     public GameObject levelEndScreen;
+
     public TMP_Text endTimeText;
 
     public string mainMenuName;
+
+    public GameObject pauseScreen;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,7 +42,10 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape)) 
+        {
+            PauseUnpause();
+        }
     }
     
     public void UpdateExperience(int currentExp, int levelExp, int currentLvl)
@@ -60,9 +70,63 @@ public class UIController : MonoBehaviour
     public void GoToMainMenu()
     {
         SceneManager.LoadScene(mainMenuName);
+        Time.timeScale = 1f;
     }
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 1f;
     }
+
+    public void UpdateCoins() 
+    {
+        coinText.text = "Coins: " + CoinController.instance.currentCoins;   
+    }
+
+    public void PurchaseMoveSpeed()
+    {
+        PlayerStatController.instance.PurchaseMoveSpeed();
+        SkipLevelUp();
+    }
+
+    public void PurchaseHealth()
+    {
+        PlayerStatController.instance.PurchaseHealth();
+        SkipLevelUp();
+    }
+
+    public void PurchasePickupRange()
+    {
+        PlayerStatController.instance.PurchasePickupRange();
+        SkipLevelUp();
+    }
+
+    public void PurchaseMaxWeapon()
+    {
+        PlayerStatController.instance.PurchaseMaxWeapons();
+        SkipLevelUp();
+    }
+
+    public void QuitGame()
+    { 
+        Application.Quit();
+    }
+
+    public void PauseUnpause()
+    {
+        if (pauseScreen.activeSelf == false)
+        {
+            pauseScreen.SetActive(true);
+            Time.timeScale = 0f;
+        }
+        else 
+        {
+            pauseScreen.SetActive(false);
+            if (levelUpPanel.activeSelf == false)
+            {
+                Time.timeScale = 1f;
+            }
+        }
+    }
+
 }

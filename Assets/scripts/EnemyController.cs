@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using UnityEngine;
+﻿using UnityEngine;
+using Pathfinding;  // 引入 Pathfinding 命名空间以访问 AIPath 组件
 
 public class EnemyController : MonoBehaviour
 {
@@ -16,7 +14,7 @@ public class EnemyController : MonoBehaviour
 
     public float health = 5f;
 
-    public float knockBackTime = 0.5f;//���h
+    public float knockBackTime = 0.5f; //击退
     private float knockBackCounter;
 
     public int expToGive = 1;
@@ -24,52 +22,70 @@ public class EnemyController : MonoBehaviour
     public int coinValue = 1;
     public float coinDropRate = .5f;
 
+    private AIPath aiPath;  // 添加 AIPath 变量，表示 AIPath 组件的实例
+
     // Start is called before the first frame update
     void Start()
     {
-        //target = FindObjectOfType<PlayerController>().transform;
-        //target = PlayerHealthController.instance.transform;
+        theRB.constraints = RigidbodyConstraints2D.FreezeRotation;
+        aiPath = GetComponent<AIPath>();  // 获取当前物体上的 AIPath 组件
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*theRB.velocity = (target.position - transform.position).normalized * moveSpeed;
+        if (PlayerController.instance != null && PlayerController.instance.gameObject.activeSelf)
         {
-            if (hitCounter>0f) 
-            {
-                hitCounter-=Time.deltaTime;
-            }
-        }*/
-        if (PlayerController.instance.gameObject.activeSelf == true)
-        {
+            // 玩家存活时处理正常的击退和移动逻辑
             if (knockBackCounter > 0)
             {
                 knockBackCounter -= Time.deltaTime;
 
                 if (moveSpeed > 0)
                 {
-                    moveSpeed = -moveSpeed * 1f;//���h�Z��
+                    moveSpeed = -moveSpeed * 2f; // 击退时翻转移动方向
                 }
 
                 if (knockBackCounter <= 0)
                 {
-                    moveSpeed = Mathf.Abs(moveSpeed * .5f);
+                    moveSpeed = Mathf.Abs(moveSpeed * 0.5f); // 击退结束后恢复正向速度
                 }
             }
-        }
 
-            /*theRB.velocity = (target.position - transform.position).normalized * moveSpeed;
+            // 如果有目标（玩家），计算方向并移动
+            if (target != null)
+            {
+                theRB.velocity = (target.position - transform.position).normalized * moveSpeed;
+            }
+            else
+            {
+                theRB.velocity = Vector2.zero; // 没有目标时保持静止
+            }
 
-            if (hitCounter >= 0f)
+            //击中计时器逻辑
+            if (hitCounter > 0f)
             {
                 hitCounter -= Time.deltaTime;
             }
-        //}
-        /*else
+        }
+        else
         {
+            // 玩家死亡时，立即停止敌人的所有移动
             theRB.velocity = Vector2.zero;
-        }*/
+
+            // 停用 AIPath 来停止敌人移动
+            if (aiPath != null)
+            {
+                aiPath.enabled = false;  // 禁用 AIPath 组件，停止敌人移动
+            }
+
+            // 如果有动画组件，关闭动画
+            Animator animator = GetComponent<Animator>();
+            if (animator != null)
+            {
+                animator.enabled = false; // 停止动画
+            }
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -79,7 +95,6 @@ public class EnemyController : MonoBehaviour
             PlayerHealthController.instance.TakeDamage(damage);
             hitCounter = hitWaitTime;
         }
-
     }
 
     public void TakeDamage(float damageToTake)
@@ -91,22 +106,12 @@ public class EnemyController : MonoBehaviour
 
             ExperienceLevelController.instance.SpawnExp(transform.position, expToGive);
 
-            /*Destroy(gameObject);
-
             if (Random.value <= coinDropRate)
             {
                 CoinController.instance.DropCoin(transform.position, coinValue);
             }
-
-            SFXManager.instance.PlaySFXPitched(0);*/
         }
-        /*else
-        {
-            SFXManager.instance.PlaySFXPitched(1);
-        }*/
-
         DamageNumberController.instance.SpawnDamage(damageToTake, transform.position);
-
     }
 
     public void TakeDamage(float damageToTake, bool shouldKnockback)
