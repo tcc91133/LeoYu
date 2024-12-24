@@ -8,12 +8,12 @@ public class enemyani : MonoBehaviour
     private Vector3 originalScale;
     private Animator animator;
 
- 
+
 
     private void Start()
     {
         animator = GetComponent<Animator>();
-        
+
         // 保存敵人的初始縮放值
         originalScale = transform.localScale;
         // 自動尋找帶有 "Player" 標籤的物件
@@ -43,9 +43,9 @@ public class enemyani : MonoBehaviour
                 }
             }
         }
-        
+
     }
-    
+
 
 
 }
