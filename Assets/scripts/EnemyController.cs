@@ -28,8 +28,15 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         theRB.constraints = RigidbodyConstraints2D.FreezeRotation;
-        aiPath = GetComponent<AIPath>();  // 获取当前物体上的 AIPath 组件
+        aiPath = GetComponent<AIPath>();
+
+        // 禁用 AIPath 的物理碰撞檢測
+        if (aiPath != null)
+        {
+            aiPath.constrainInsideGraph = false; // 禁止強制限制在圖表內
+        }
     }
+
 
     // Update is called once per frame
     void Update()
