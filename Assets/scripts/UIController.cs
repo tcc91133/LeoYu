@@ -54,7 +54,7 @@ public class UIController : MonoBehaviour
         explvlSlider.maxValue = levelExp;
         explvlSlider.value = currentExp;
 
-        expLvlText.text = "Level: " + currentLvl;
+        expLvlText.text = "等級: " + currentLvl;
     }
     public void SkipLevelUp() 
     {
@@ -66,7 +66,7 @@ public class UIController : MonoBehaviour
         float minutes =Mathf.FloorToInt( time / 60f);
         float seconds = Mathf.FloorToInt(time % 60);
 
-        timeText.text = "Time: " + minutes + ":" + seconds.ToString("00");
+        timeText.text = "時間: " + minutes + ":" + seconds.ToString("00");
     }
     public void GoToMainMenu()
     {
@@ -81,7 +81,7 @@ public class UIController : MonoBehaviour
 
     public void UpdateCoins() 
     {
-        coinText.text = "Coins: " + CoinController.instance.currentCoins;   
+        coinText.text = "金錢: " + CoinController.instance.currentCoins;   
     }
 
     public void PurchaseMoveSpeed()

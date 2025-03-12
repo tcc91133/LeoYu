@@ -57,7 +57,7 @@ public class WaveManager : MonoBehaviour
     }
     private void StarWave(int waveIndex)
     {
-        ui.UpdateWaveText("Wave" + (currentWaveIndex + 1) + "/" + waves.Length);
+        ui.UpdateWaveText("波次" + (currentWaveIndex + 1) + "/" + waves.Length);
 
         localCounters.Clear();
         foreach (WaveSegment segment in waves[waveIndex].segments)
