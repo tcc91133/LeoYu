@@ -9,6 +9,8 @@ public class WaveManager : MonoBehaviour
 
     private WaveManageUI ui;
 
+    public CompleteManager completeManager;
+    private bool isFinalWave = false;
     [Header("Settings")]
     [SerializeField] private float waveDuration;
     private float timer;
@@ -91,29 +93,36 @@ public class WaveManager : MonoBehaviour
 
     private void StartWaveTransition()
     {
-        isTimeOn = false;
-        DefeatAllEnemies();
-        currentWaveIndex++;
+        isTimeOn = false; // 停止计时
+        currentWaveIndex++; // 进入下一个波次
 
-        if (currentWaveIndex >= waves.Length)
-        { 
-            ui.UpdateTimerText("");
-            ui.UpdateWaveText("通關");
-        }
-           
-        else
-            StarWave(currentWaveIndex);
-    }
-
-    private void DefeatAllEnemies()
-    {
-        while (transform.childCount > 0)
+        if (currentWaveIndex >= waves.Length) // 如果是最后一波
         {
-            Transform child = transform.transform.GetChild(0);
-            child.SetParent(null);
-            Object.Destroy(child.gameObject);
+            isFinalWave = true; // 设置标志，表示现在是最后一波
+            ui.UpdateTimerText(""); // 清空时间显示
+            ui.UpdateWaveText("波次完成，擊敗所有敵人"); // 显示通关UI
+
+            // 通知 CompleteManager 检查敌人是否消失
+            if (completeManager != null)
+            {
+                completeManager.CheckEnemiesCleared(isFinalWave); // 传递是否为最后一波
+            }
+        }
+        else
+        {
+            StarWave(currentWaveIndex); // 启动下一个波次
         }
     }
+
+    /* private void DefeatAllEnemies()
+     {
+         while (transform.childCount > 0)
+         {
+             Transform child = transform.transform.GetChild(0);
+             child.SetParent(null);
+             Object.Destroy(child.gameObject);
+         }
+     }*/
 
     private Vector2 GetSpawnPosition()
     {
@@ -127,6 +136,7 @@ public class WaveManager : MonoBehaviour
         return targetPosition;
     }
 }
+
 [System.Serializable]
 public struct Wave 
 {
