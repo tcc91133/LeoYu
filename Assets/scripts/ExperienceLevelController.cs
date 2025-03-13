@@ -104,7 +104,7 @@ public class ExperienceLevelController : MonoBehaviour
 
         for(int i = 0;i < weaponsToUpgrade.Count; i++)
         {
-            UIController.instance.levelUpButtons[i].UpdataButtonDisplay(weaponsToUpgrade[i]);
+            UIController.instance.levelUpButtons[i].UpdateButtonDisplay(weaponsToUpgrade[i]);
         }
 
         for(int i = 0; i < UIController.instance.levelUpButtons.Length; i++)

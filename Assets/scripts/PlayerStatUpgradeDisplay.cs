@@ -9,8 +9,8 @@ public class PlayerStatUpgradeDisplay : MonoBehaviour
 
     public void UpdateDisplay(int cost, float oldValue,float newValue)
     {
-        valueText.text = "Value " + oldValue.ToString("F1") + "->" + newValue.ToString("F1");
-        costText.text = "Cost: " + cost;
+        valueText.text = "數值 " + oldValue.ToString("F1") + "->" + newValue.ToString("F1");
+        costText.text = "花費: " + cost;
 
         if(cost <= CoinController.instance.currentCoins)
         {
@@ -23,8 +23,8 @@ public class PlayerStatUpgradeDisplay : MonoBehaviour
 
     public void ShowMaxLevel()
     {
-        valueText.text = "Max Level";
-        costText.text = "Max Level";
+        valueText.text = "滿級";
+        costText.text = "滿級";
         upgradeButton.SetActive(false);
     }
 

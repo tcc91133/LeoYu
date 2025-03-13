@@ -3,6 +3,9 @@ using Pathfinding;  // 引入 Pathfinding 命名空间以访问 AIPath 组件
 
 public class EnemyController : MonoBehaviour
 {
+
+    //private bool hosSpawned;
+
     public Rigidbody2D theRB;
     public float moveSpeed;
     private Transform target;
@@ -39,8 +42,12 @@ public class EnemyController : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    void Update() 
     {
+        /*if (hosSpawned) 
+        {
+        
+        }*/
         if (PlayerController.instance != null && PlayerController.instance.gameObject.activeSelf)
         {
             // 玩家存活时处理正常的击退和移动逻辑
@@ -131,4 +138,10 @@ public class EnemyController : MonoBehaviour
             knockBackCounter = knockBackTime;
         }
     }
+    /*private void SpawnSequenceCompleted() 
+    {
+        Renderer.enabled = true;
+        spawnIndicator
+    
+    }*/
 }
