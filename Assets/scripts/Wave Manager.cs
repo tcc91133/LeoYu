@@ -35,10 +35,10 @@ public class WaveManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerTransform != null)
+        if (playerTransform == null || !playerTransform.gameObject.activeInHierarchy)
         {
-            Vector3 playerPosition = playerTransform.position;
-            //Debug.Log("玩家位置：" + playerPosition);
+            StopGeneratingEnemies();
+            return;
         }
 
         if (!isTimeOn)
@@ -46,16 +46,22 @@ public class WaveManager : MonoBehaviour
             return;
         }
 
-        if (timer < waveDuration) 
+        if (timer < waveDuration)
         {
             manageCurrentWave();
 
-            string timerSrting = ((int)(waveDuration - timer)).ToString();
-            ui.UpdateTimerText(timerSrting);
+            string timerString = ((int)(waveDuration - timer)).ToString();
+            ui.UpdateTimerText(timerString);
         }
-            
         else
+        {
             StartWaveTransition();
+        }
+    }
+    private void StopGeneratingEnemies()
+    {
+        isTimeOn = false; // 停止计时器
+        timer = 0f; // 重置计时器
     }
     private void StarWave(int waveIndex)
     {
@@ -138,14 +144,14 @@ public class WaveManager : MonoBehaviour
 }
 
 [System.Serializable]
-public struct Wave 
+public struct Wave
 {
     public string name;
     public List<WaveSegment> segments;
 }
 
 [System.Serializable]
-public struct WaveSegment 
+public struct WaveSegment
 {
     [MinMaxSlider(0, 100)] public Vector2 tStaretEnd;
     public float spawnFrequency;
