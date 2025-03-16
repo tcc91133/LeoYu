@@ -1702,6 +1702,85 @@ MonoBehaviour:
     - tStaretEnd: {x: 0, y: 100}
       spawnFrequency: 2
       prefub: {fileID: 1203867063886572898, guid: 1c767299e375c854a9393eaa0aaa5520, type: 3}
+  - name: Wave02
+    segments:
+    - tStaretEnd: {x: 0, y: 100}
+      spawnFrequency: 1
+      prefub: {fileID: 1203867063886572898, guid: bbf320b716b20584eba506463d5d89fd, type: 3}
+  - name: Wave03
+    segments:
+    - tStaretEnd: {x: 0, y: 100}
+      spawnFrequency: 2
+      prefub: {fileID: 1203867063886572898, guid: 7b671e105b8980f44a1c9c8c7ed2d8d5, type: 3}
+    - tStaretEnd: {x: 0, y: 100}
+      spawnFrequency: 2
+      prefub: {fileID: 1203867063886572898, guid: 1c767299e375c854a9393eaa0aaa5520, type: 3}
+  - name: Wave04
+    segments:
+    - tStaretEnd: {x: 0, y: 100}
+      spawnFrequency: 3
+      prefub: {fileID: 1203867063886572898, guid: 7b671e105b8980f44a1c9c8c7ed2d8d5, type: 3}
+    - tStaretEnd: {x: 0, y: 34}
+      spawnFrequency: 2
+      prefub: {fileID: 1203867063886572898, guid: 1c767299e375c854a9393eaa0aaa5520, type: 3}
+    - tStaretEnd: {x: 33, y: 100}
+      spawnFrequency: 1
+      prefub: {fileID: 1203867063886572898, guid: bbf320b716b20584eba506463d5d89fd, type: 3}
+  - name: Wave05
+    segments:
+    - tStaretEnd: {x: 0, y: 100}
+      spawnFrequency: 3
+      prefub: {fileID: 1203867063886572898, guid: 7b671e105b8980f44a1c9c8c7ed2d8d5, type: 3}
+    - tStaretEnd: {x: 0, y: 100}
+      spawnFrequency: 2
+      prefub: {fileID: 1203867063886572898, guid: 1c767299e375c854a9393eaa0aaa5520, type: 3}
+    - tStaretEnd: {x: 0, y: 100}
+      spawnFrequency: 2
+      prefub: {fileID: 1203867063886572898, guid: bbf320b716b20584eba506463d5d89fd, type: 3}
+  - name: Wave06
+    segments:
+    - tStaretEnd: {x: 0, y: 100}
+      spawnFrequency: 4
+      prefub: {fileID: 1203867063886572898, guid: 7b671e105b8980f44a1c9c8c7ed2d8d5, type: 3}
+    - tStaretEnd: {x: 0, y: 100}
+      spawnFrequency: 3
+      prefub: {fileID: 1203867063886572898, guid: 1c767299e375c854a9393eaa0aaa5520, type: 3}
+    - tStaretEnd: {x: 0, y: 100}
+      spawnFrequency: 3
+      prefub: {fileID: 1203867063886572898, guid: bbf320b716b20584eba506463d5d89fd, type: 3}
+  - name: Wave07
+    segments:
+    - tStaretEnd: {x: 0, y: 100}
+      spawnFrequency: 4
+      prefub: {fileID: 1203867063886572898, guid: 7b671e105b8980f44a1c9c8c7ed2d8d5, type: 3}
+    - tStaretEnd: {x: 0, y: 100}
+      spawnFrequency: 4
+      prefub: {fileID: 1203867063886572898, guid: 1c767299e375c854a9393eaa0aaa5520, type: 3}
+    - tStaretEnd: {x: 0, y: 100}
+      spawnFrequency: 3
+      prefub: {fileID: 1203867063886572898, guid: bbf320b716b20584eba506463d5d89fd, type: 3}
+  - name: Wave08
+    segments:
+    - tStaretEnd: {x: 0, y: 100}
+      spawnFrequency: 4
+      prefub: {fileID: 1203867063886572898, guid: 7b671e105b8980f44a1c9c8c7ed2d8d5, type: 3}
+    - tStaretEnd: {x: 0, y: 100}
+      spawnFrequency: 5
+      prefub: {fileID: 1203867063886572898, guid: 1c767299e375c854a9393eaa0aaa5520, type: 3}
+    - tStaretEnd: {x: 0, y: 100}
+      spawnFrequency: 2
+      prefub: {fileID: 1203867063886572898, guid: bbf320b716b20584eba506463d5d89fd, type: 3}
+  - name: Wave09
+    segments:
+    - tStaretEnd: {x: 33, y: 100}
+      spawnFrequency: 5
+      prefub: {fileID: 1203867063886572898, guid: 7b671e105b8980f44a1c9c8c7ed2d8d5, type: 3}
+    - tStaretEnd: {x: 0, y: 100}
+      spawnFrequency: 5
+      prefub: {fileID: 1203867063886572898, guid: 1c767299e375c854a9393eaa0aaa5520, type: 3}
+    - tStaretEnd: {x: 50, y: 100}
+      spawnFrequency: 5
+      prefub: {fileID: 1203867063886572898, guid: bbf320b716b20584eba506463d5d89fd, type: 3}
 --- !u!4 &160582747
 Transform:
   m_ObjectHideFlags: 0
@@ -5067,8 +5146,8 @@ Transform:
   m_GameObject: {fileID: 414436432}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.9619589, w: 0.27319443}
-  m_LocalPosition: {x: 1.239, y: 7.0109997, z: 0}
-  m_LocalScale: {x: 0.11219231, y: 0.47357133, z: 0.20738462}
+  m_LocalPosition: {x: 1.21266, y: 7.0405, z: 0}
+  m_LocalScale: {x: 0.08461222, y: 0.45991117, z: 0.20738462}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 719260458}
@@ -5855,8 +5934,8 @@ Transform:
   m_GameObject: {fileID: 492476044}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.24438587, w: 0.9696781}
-  m_LocalPosition: {x: 1.7520001, y: 6.5899997, z: 0}
-  m_LocalScale: {x: 0.1279006, y: 0.46390685, z: 0.20531566}
+  m_LocalPosition: {x: 1.80375, y: 6.3473, z: 0}
+  m_LocalScale: {x: 0.10752488, y: 0.49807417, z: 0.20531566}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 719260458}
@@ -18681,7 +18760,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAABAIex26WywWgIAABAFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VE1z2jAQ/SuMzqXjACWht9ZJSA9JmNBOLr4IaYU1yJJHHwGS4b93JdvYodMTy9u3u28/5A8itauBeWOXVvJHw4F8H5Foky+j3vkAB7o1ei3foeO8Su7LSKKJ80K9NIhfxTBnKvBWsh96qyI5QzBoKYyt7vgWcuO8Q1hQ5QBd1vgYrRH6GJED/owXMeSI1uQ6Wu9oLbLRCU0G2oPtqR2xozWsoJmiVQ08Su7J8449b2gam2kZUTgzSknXKiH+WKdOc1q7gH0ggUuKnaXykV+C3JY+qhwGPwvhwLeSLD3eSosDarKSn6aZWkXdrtH1RlWIdeazJKnJ+fiPe3yV3MKa6qEre5XFEr6UbPdCj4w6P5jqEL79rDvoPVU7ulHwWoJ+Mktrgubo9DbE0OBgctv/PXeWl8B2Pd5IvQBD/f/dxB5OqflDrmS1ia6vswZYK5PGnTYPFhfzCwWnu3BtCkSjij8OftPt8IBax720zqOr7VJHeRsTbKSSezTi4FnwubEaEtpqrkFT5Y8rzOIvF3jhG1S98NzT+FLa2q2vewAXIQnu+Vl24VqZ/XlXrjT7R3Dlc/BKauhFR8cTjik3Wjf3NRxJF7YOVlA2CNsGyT9fFlksrhdini3EZMpZJibjbzdiusmm09k1n4kbMSPp9KTGPqlaNULb8eDSdJ9c45l1H5DR0tI63Tq3dL+U75UZjFxqYdbMAujnJsNZOFgsgm+S33GJA1qD91KndZOPgijDdsCLc6IidXp38JYWfZaC1PLN+IgUJE9fjIJE+HzKKwtvEvaxeJfsRE5/AVBLAwQUAAAICAAAQCHsPDO6tG0AAAB4AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9IzNNdRUEovSizIKAaKGII4pZkpIHa0kqWluWWamYFlmpFxSrJBmpGuqUWacZKBsbGJeYpJmkWaiVIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrqee1FmijvIaKXYWgBQSwECLQAUAAAICAAAQCHsdulssFoCAAAQBQAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAAQCHsPDO6tG0AAAB4AAAACQAkAAAAAAAAAAAAAACnAgAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAAF8DAAAAAA==
+    dataString: UEsDBBQAAAgIAABAIewfpbmjWwIAABMFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VEtz2jAQ/iuMzqXj8EhCb60hpAcSJqSTiy/CWmENsuTRI0Ay/PeuZBs7dHpi+fbb3W8f8icRylaQO22WRrCVZkB+DEiwybdB53yEI91ptREf0HLeBHNFINHIeaFOaMRvQpjVJTgj8p9qJwM5QdArwbUpF2wHqbbOIsyptIAuo12IVgh9DsgRf4azEHJCa3QXrA+0ZsngjGYOyoHpqC2xpdUsr3JJywpYkNyRpy17WtMUNtMwku/TkF1LKWyjhbhTFXtNaWU9doIEJij2FgWEVgsQu8IFnf3gZ84tuEaUoae5MDiiOiv5peu5ldTua2XvVPpQ53YSRdU5V/+4hzfRzY0uH9uyN0ko4QqR71/oKafW9ebah+dfdXt1oHJPtxLeClBPemm0VwydzvgQ6i2M5t3fS2dpAfm+w2upV6Cv/r+d0MM5Nn9MpSi3cfCTGthIHccddw8GV/MbBcfLsE0KRIOKPxZe6a5/Qo3jQRjr0NV0qYK8rfYmUMkizix0412qjYIIN6IrUFS60xrTuOsNXvl6Za88DzQ8lqZ442vfwFVIhDt+kly51vpwWZYt9GEFtnj2TgoFnejgeMI5pVqp+sD6M2nDNt5wmvfCdl6wr6dFZrO7Gb9NZnw0ZnnCR8PpPR9vk/F4cscm/J5PSLw9obBPKte10GY8uDXVJVd4Z+03ZLA0tIrHzgw9LMVHqXsjF4rrTW4A1HOd4SIcDBbBZ8kWTOCANuCcUHHf5DMjUud7YNklURY7XRydoVmXJSOVeNcuIBlJ40cjIwG+3PLawLuAQyjeJjuT819QSwMEFAAACAgAAEAh7DwzurRtAAAAeAAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSMzTXUVBKL0osyCgGihiCOKWZKSB2tJKlpbllmpmBZZqRcUqyQZqRrqlFmnGSgbGxiXmKSZpFmolSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAAEAh7B+luaNbAgAAEwUAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAAEAh7DwzurRtAAAAeAAAAAkAJAAAAAAAAAAAAAAAqAIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAABgAwAAAAA=
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -20804,8 +20883,8 @@ Transform:
   m_GameObject: {fileID: 1933932744}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.9619589, w: 0.27319443}
-  m_LocalPosition: {x: -3.1270003, y: 7.0099998, z: 0}
-  m_LocalScale: {x: 0.11219231, y: 0.47357133, z: 0.20738462}
+  m_LocalPosition: {x: -3.13024, y: 7.0523, z: 0}
+  m_LocalScale: {x: 0.12348559, y: 0.51259357, z: 0.20738462}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 719260458}
