@@ -60,11 +60,11 @@ public class LevelUpSelectionButton : MonoBehaviour
             }
             else if (Mathf.Abs(nextStats.timeBetweenAttacks - currentStats.timeBetweenAttacks) > 0.1f)
             {
-                description = $"攻擊間隔 {(nextStats.timeBetweenAttacks - currentStats.timeBetweenAttacks > 0 ? "+" : "")}{nextStats.timeBetweenAttacks - currentStats.timeBetweenAttacks:F2}";
+                description = $"攻擊間隔 +{(nextStats.timeBetweenAttacks - currentStats.timeBetweenAttacks > 0 ? "+" : "")}{nextStats.timeBetweenAttacks - currentStats.timeBetweenAttacks:F2}";
             }
             else if (nextStats.amount != currentStats.amount)
             {
-                description = $"攻擊量 +{nextStats.amount - currentStats.amount:F2}";
+                description = $"數量 +{nextStats.amount - currentStats.amount:F2}";
             }
             else if (nextStats.duration != currentStats.duration)
             {

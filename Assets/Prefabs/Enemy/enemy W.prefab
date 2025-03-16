@@ -49,9 +49,9 @@ GameObject:
   - component: {fileID: -1343421922414517444}
   - component: {fileID: 4282832122420259855}
   - component: {fileID: 7389982108694919658}
-  - component: {fileID: 5592287778698211340}
+  - component: {fileID: 3201452593923091421}
   m_Layer: 7
-  m_Name: enemy 1
+  m_Name: enemy W
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -114,7 +114,7 @@ SpriteRenderer:
   m_SortingLayerID: -1913630117
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1251623853, guid: 85e343493e8229f479c966e02617d314, type: 3}
+  m_Sprite: {fileID: 1631169936, guid: 3ee59ef600d16854bb61154cbda5b2ac, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -157,8 +157,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.13}
-  m_Size: {x: 0.9, y: 1.36}
+  m_Offset: {x: 0, y: 0.11}
+  m_Size: {x: 0.71, y: 1.47}
   m_Direction: 0
 --- !u!114 &1709422436519498242
 MonoBehaviour:
@@ -174,9 +174,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   theRB: {fileID: 7389982108694919658}
   moveSpeed: 10
-  damage: 5
+  damage: 10
   hitWaitTime: 1
-  health: 1
+  health: 7
   knockBackTime: 0.5
   expToGive: 1
   coinValue: 1
@@ -191,7 +191,7 @@ Animator:
   m_GameObject: {fileID: 1203867063886572898}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2549e960c3528514e874c4157f5554da, type: 2}
+  m_Controller: {fileID: 9100000, guid: a451bef088dca8640b65168f8f899bf5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -259,7 +259,7 @@ MonoBehaviour:
   radius: 0.25
   height: 2
   canMove: 1
-  maxSpeed: 4
+  maxSpeed: 2.13
   gravity: {x: 0, y: 0, z: 0}
   groundMask:
     serializedVersion: 2
@@ -325,8 +325,8 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &5592287778698211340
+  m_Constraints: 4
+--- !u!114 &3201452593923091421
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
