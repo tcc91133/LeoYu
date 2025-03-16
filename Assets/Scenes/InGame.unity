@@ -794,42 +794,28 @@ MonoBehaviour:
     timeBetweenAttacks: 1.5
     amount: 1
     duration: 1.25
-    upgradeText: More Damage
+    upgradeText: amount+1
   - speed: 0
-    damage: 10
+    damage: 5
     range: 1
     timeBetweenAttacks: 1.5
     amount: 2
     duration: 1.25
-    upgradeText: Quicker
+    upgradeText: time between*1.25
   - speed: 0
-    damage: 10
+    damage: 5
     range: 1
     timeBetweenAttacks: 1.25
-    amount: 3
+    amount: 2
     duration: 1.25
-    upgradeText: Longer Life
+    upgradeText: range*1.5
   - speed: 0
-    damage: 10
-    range: 1
-    timeBetweenAttacks: 1.25
-    amount: 4
-    duration: 2
-    upgradeText: Bigger
-  - speed: 0
-    damage: 10
-    range: 1
-    timeBetweenAttacks: 1.25
-    amount: 5
-    duration: 2
-    upgradeText: Crazy Time
-  - speed: 0
-    damage: 15
-    range: 2
+    damage: 5
+    range: 1.5
     timeBetweenAttacks: 1
-    amount: 10
-    duration: 2.25
-    upgradeText: Final
+    amount: 2
+    duration: 1.25
+    upgradeText: More Damage
   weaponLevel: 0
   statsUpdated: 0
   icon: {fileID: -903333556, guid: 2e45cedd6b4c1d749a0c16c4692d477d, type: 3}
@@ -3335,7 +3321,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 79972110}
-  - {fileID: 1177949013}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &282244718
@@ -6213,34 +6198,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats:
-  - speed: 0.5
-    damage: 2
-    range: 1.5
+  - speed: 0.45
+    damage: 1
+    range: 1.75
     timeBetweenAttacks: 8
     amount: 0
-    duration: 7
-    upgradeText: Damage+1
-  - speed: 0.5
-    damage: 3
-    range: 2
+    duration: 6
+    upgradeText: speed*0.35
+  - speed: 0.35
+    damage: 1
+    range: 1.75
     timeBetweenAttacks: 8
     amount: 0
-    duration: 7
-    upgradeText: Range*1.1
-  - speed: 0.5
-    damage: 3
-    range: 2.1
-    timeBetweenAttacks: 8
-    amount: 0
-    duration: 7
-    upgradeText: 'Time Between DamageDecrese '
+    duration: 6
+    upgradeText: damage+1
   - speed: 0.4
-    damage: 3
-    range: 2.1
+    damage: 2
+    range: 1.75
     timeBetweenAttacks: 8
     amount: 0
-    duration: 7
-    upgradeText: Final
+    duration: 6
+    upgradeText: range*2.25
+  - speed: 0.4
+    damage: 2
+    range: 2.25
+    timeBetweenAttacks: 8
+    amount: 0
+    duration: 6
+    upgradeText: MAX
   weaponLevel: 0
   statsUpdated: 0
   icon: {fileID: 21300000, guid: fcd63848dfd594242b9cfea5066f759d, type: 3}
@@ -7753,35 +7738,28 @@ MonoBehaviour:
     timeBetweenAttacks: 2
     amount: 1
     duration: 0.5
-    upgradeText: Damger+5
+    upgradeText: Damage+5
+  - speed: 0
+    damage: 15
+    range: 1
+    timeBetweenAttacks: 2
+    amount: 1
+    duration: 0.5
+    upgradeText: amount+1
   - speed: 0
     damage: 15
     range: 1
     timeBetweenAttacks: 2
     amount: 2
     duration: 0.5
-    upgradeText: Bigger&Quicker
-  - speed: 0
-    damage: 15
-    range: 1.5
-    timeBetweenAttacks: 1.5
-    amount: 3
-    duration: 0.5
     upgradeText: Lonrer Sword Time
   - speed: 0
     damage: 15
     range: 1.5
-    timeBetweenAttacks: 1.5
-    amount: 4
-    duration: 0.75
-    upgradeText: Really Quicker
-  - speed: 0
-    damage: 15
-    range: 1.5
-    timeBetweenAttacks: 1
-    amount: 5
-    duration: 0.75
-    upgradeText: final
+    timeBetweenAttacks: 2
+    amount: 2
+    duration: 0.5
+    upgradeText: MAX
   weaponLevel: 0
   statsUpdated: 0
   icon: {fileID: -1339484015, guid: 9d4aca74d0b3f81448e3cbd8abb2768f, type: 3}
@@ -8097,40 +8075,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
   - speed: 1
+    damage: 4
+    range: 1.5
+    timeBetweenAttacks: 8
+    amount: 1
+    duration: 4
+    upgradeText: damge+1
+  - speed: 1
+    damage: 5
+    range: 1.5
+    timeBetweenAttacks: 8
+    amount: 1
+    duration: 4
+    upgradeText: speed*1.3
+  - speed: 1.3
     damage: 5
     range: 1.5
     timeBetweenAttacks: 8
     amount: 1
     duration: 6
-    upgradeText: Double +2
-  - speed: 1
-    damage: 7
-    range: 1.6
-    timeBetweenAttacks: 7.5
-    amount: 2
-    duration: 7
-    upgradeText: speed*1.1
-  - speed: 1.1
-    damage: 7
-    range: 1.6
-    timeBetweenAttacks: 7.5
-    amount: 3
-    duration: 7
-    upgradeText: Double +2
-  - speed: 1.1
-    damage: 10
-    range: 1.7
-    timeBetweenAttacks: 7.5
-    amount: 4
-    duration: 7
-    upgradeText: Double +3
-  - speed: 1.1
-    damage: 10
-    range: 1.7
-    timeBetweenAttacks: 7.5
-    amount: 4
-    duration: 7
-    upgradeText: Double +3
+    upgradeText: range*2
+  - speed: 1.3
+    damage: 5
+    range: 1.75
+    timeBetweenAttacks: 8
+    amount: 1
+    duration: 6
+    upgradeText: MAX
   weaponLevel: 0
   statsUpdated: 0
   icon: {fileID: 21300000, guid: 5df81328983018c46a2972027ed9c658, type: 3}
@@ -8525,6 +8496,7 @@ Transform:
   - {fileID: 1579571919}
   - {fileID: 1933932745}
   - {fileID: 414436433}
+  - {fileID: 1001742562}
   m_Father: {fileID: 79972110}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &741014046
@@ -8759,6 +8731,7 @@ GameObject:
   - component: {fileID: 775807942}
   - component: {fileID: 775807941}
   - component: {fileID: 775807946}
+  - component: {fileID: 775807949}
   - component: {fileID: 775807947}
   - component: {fileID: 775807944}
   - component: {fileID: 775807943}
@@ -8962,6 +8935,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &775807949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 775807938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5600bda4308f35543aa40e5c6c44d9bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashDistance: 1.5
+  dashDuration: 0.2
+  dashCooldown: 1.5
+  dashSpeed: 2
 --- !u!1 &790206286
 GameObject:
   m_ObjectHideFlags: 0
@@ -9122,34 +9111,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats:
-  - speed: 5
+  - speed: 6
     damage: 5
-    range: 1
-    timeBetweenAttacks: 1.5
+    range: 1.25
+    timeBetweenAttacks: 1.25
     amount: 1
     duration: 0.5
-    upgradeText: Damage+2
-  - speed: 7
-    damage: 7
-    range: 1
-    timeBetweenAttacks: 1.5
-    amount: 2
-    duration: 0.75
-    upgradeText: shot waut time reduced
-  - speed: 7
-    damage: 7
-    range: 1
+    upgradeText: amount+1
+  - speed: 6
+    damage: 5
+    range: 1.25
     timeBetweenAttacks: 1.25
     amount: 2
     duration: 0.5
-    upgradeText: Damage+3
-  - speed: 7
-    damage: 10
-    range: 1.5
-    timeBetweenAttacks: 1
-    amount: 4
+    upgradeText: time between*0.75
+  - speed: 6
+    damage: 5
+    range: 1.25
+    timeBetweenAttacks: 0.75
+    amount: 2
     duration: 0.5
-    upgradeText: bigger
+    upgradeText: Damage+3
+  - speed: 6
+    damage: 8
+    range: 1.25
+    timeBetweenAttacks: 0.75
+    amount: 2
+    duration: 0.5
+    upgradeText: MAX
   weaponLevel: 0
   statsUpdated: 0
   icon: {fileID: 802584968, guid: 2e45cedd6b4c1d749a0c16c4692d477d, type: 3}
@@ -10862,6 +10851,136 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 990961377}
   m_CullTransparentMesh: 1
+--- !u!1 &1001742561
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1001742562}
+  - component: {fileID: 1001742564}
+  - component: {fileID: 1001742563}
+  m_Layer: 6
+  m_Name: barrierS14
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1001742562
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001742561}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: 0.24438587, w: 0.9696781}
+  m_LocalPosition: {x: -2.027, y: 8.457, z: 0}
+  m_LocalScale: {x: 0.1279006, y: 0.46390685, z: 0.20531566}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 719260458}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 28.291}
+--- !u!61 &1001742563
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001742561}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!212 &1001742564
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001742561}
+  m_Enabled: 0
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &1010176478
 GameObject:
   m_ObjectHideFlags: 0
@@ -12375,37 +12494,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1177949012
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1177949013}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1177949013
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1177949012}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.9364157, y: -2.2225122, z: -0.1079383}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 272626061}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1193424149
 GameObject:
   m_ObjectHideFlags: 0

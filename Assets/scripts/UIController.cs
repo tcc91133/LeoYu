@@ -88,28 +88,24 @@ public class UIController : MonoBehaviour
     public void PurchaseMoveSpeed()
     {
         PlayerStatController.instance.PurchaseMoveSpeed();
-        SkipLevelUp();
         SFXManager.instance.PlaySFXPitched(12);
     }
 
     public void PurchaseHealth()
     {
         PlayerStatController.instance.PurchaseHealth();
-        SkipLevelUp();
         SFXManager.instance.PlaySFXPitched(12);
     }
 
     public void PurchasePickupRange()
     {
         PlayerStatController.instance.PurchasePickupRange();
-        SkipLevelUp();
         SFXManager.instance.PlaySFXPitched(12);
     }
 
     public void PurchaseMaxWeapon()
     {
         PlayerStatController.instance.PurchaseMaxWeapons();
-        SkipLevelUp();
         SFXManager.instance.PlaySFXPitched(12);
     }
 

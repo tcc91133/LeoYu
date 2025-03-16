@@ -176,7 +176,7 @@ MonoBehaviour:
   moveSpeed: 10
   damage: 5
   hitWaitTime: 1
-  health: 1
+  health: 5
   knockBackTime: 0.5
   expToGive: 1
   coinValue: 1
