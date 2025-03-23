@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,20 +6,20 @@ public class CloseAttackWeapon : Weapon
 {
     public EnemyDamager damager;
 
-    private float attackCounter, direction;
-    // Start is called before the first frame update
+    private Transform playerTransform;
+    private float attackCounter;
+
     void Start()
     {
         SetStats();
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (statsUpdated == true)
+        if (statsUpdated)
         {
             statsUpdated = false;
-
             SetStats();
         }
 
@@ -28,42 +28,36 @@ public class CloseAttackWeapon : Weapon
         {
             attackCounter = stats[weaponLevel].timeBetweenAttacks;
 
-            direction = Input.GetAxisRaw("Horizontal");
+            // 计算鼠标方向
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePosition.z = 0f;
 
-            if (direction != 0)
-            {
-                if (direction > 0)
-                {
-                    damager.transform.rotation = Quaternion.identity;
-                }
-                else
-                {
-                    damager.transform.rotation = Quaternion.Euler(0f, 0f, 180f);
-                }
-            }
+            Vector3 directionToMouse = (mousePosition - playerTransform.position).normalized;
+            float angle = Mathf.Atan2(directionToMouse.y, directionToMouse.x) * Mathf.Rad2Deg;
 
-            Instantiate(damager, damager.transform.position, damager.transform.rotation, transform).gameObject.SetActive(true);
+            Quaternion baseRotation = Quaternion.Euler(0f, 0f, angle);
 
+            // 生成主攻击
+            Instantiate(damager, damager.transform.position, baseRotation, transform).gameObject.SetActive(true);
+
+            // 生成额外攻击
             for (int i = 1; i < stats[weaponLevel].amount; i++)
             {
-                float rot = (360f / stats[weaponLevel].amount) * i;
+                float rotAngle = (360f / stats[weaponLevel].amount) * i;
+                Quaternion extraRotation = Quaternion.AngleAxis(rotAngle, Vector3.forward) * baseRotation;
 
-                Instantiate(damager, damager.transform.position, Quaternion.Euler(0f, 0f, damager.transform.rotation.eulerAngles.z + rot), transform).gameObject.SetActive(true);
+                Instantiate(damager, damager.transform.position, extraRotation, transform).gameObject.SetActive(true);
             }
 
             SFXManager.instance.PlaySFXPitched(10);
-
         }
-
     }
 
     void SetStats()
     {
         damager.damageAmount = stats[weaponLevel].damage;
         damager.lifeTime = stats[weaponLevel].duration;
-
         damager.transform.localScale = Vector3.one * stats[weaponLevel].range;
-
         attackCounter = 0f;
     }
 }
