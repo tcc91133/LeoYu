@@ -16,25 +16,23 @@ public class ExperienceLevelController : MonoBehaviour
     public ExpPickup pickup;
 
     public List<int> expLevels;
-    public int currentLevel = 1,levelCount = 100;
+    public int currentLevel = 1, levelCount = 100;
+    public int maxExpPerLevel = 25; // 新增：每級最大所需經驗值
 
     public List<Weapon> weaponsToUpgrade;
 
-    // Start is called before the first frame update
     void Start()
     {
-         while(expLevels.Count < levelCount)
+        while (expLevels.Count < levelCount)
         {
-            expLevels.Add(Mathf.CeilToInt(expLevels[expLevels.Count - 1] * 1.5f ));
+            // 修改這裡：加入上限檢查
+            int nextLevelExp = Mathf.CeilToInt(expLevels[expLevels.Count - 1] * 1.5f);
+            expLevels.Add(Mathf.Min(nextLevelExp, maxExpPerLevel)); // 確保不超過上限
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-       
-    }
-    
+    // ... (其餘方法保持不變) ...
+
     public void GetExp(int amountToGet)
     {
         currentExperience += amountToGet;
@@ -44,7 +42,7 @@ public class ExperienceLevelController : MonoBehaviour
             LevelUp();
         }
 
-        UIController.instance.UpdateExperience(currentExperience, expLevels[currentLevel],currentLevel);
+        UIController.instance.UpdateExperience(currentExperience, expLevels[currentLevel], currentLevel);
     }
 
     public void SpawnExp(Vector3 position,int expValue)

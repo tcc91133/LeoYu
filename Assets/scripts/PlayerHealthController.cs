@@ -19,6 +19,11 @@ public class PlayerHealthController : MonoBehaviour
 
     public GameObject deathEffect;
 
+    // 新增變數
+    public SpriteRenderer playerSprite; // 玩家的SpriteRenderer組件
+    public float flashDuration = 0.1f; // 變紅持續時間
+    private Color originalColor; // 儲存原始顏色
+
     void Start()
     {
         maxHealth = PlayerStatController.instance.health[0].value;
@@ -26,21 +31,28 @@ public class PlayerHealthController : MonoBehaviour
 
         healthSlider.maxValue = maxHealth;
         healthSlider.value = currentHealth;
-    }
 
-    // Update is called once per frame
-    /*void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.T)) {
-            TakeDamage(10f);
+        // 初始化
+        if (playerSprite == null)
+        {
+            playerSprite = GetComponent<SpriteRenderer>();
         }
-
-    }*/
+        if (playerSprite != null)
+        {
+            originalColor = playerSprite.color;
+        }
+    }
 
     public void TakeDamage(float damageToTake)
     {
         SFXManager.instance.PlaySFXPitched(8);
         currentHealth -= damageToTake;
+
+        // 新增：受到傷害時變紅
+        if (playerSprite != null)
+        {
+            StartCoroutine(DamageFlash());
+        }
 
         if (currentHealth <= 0)
         {
@@ -49,6 +61,8 @@ public class PlayerHealthController : MonoBehaviour
             LevelManager.instance.EndLevel();
 
             Instantiate(deathEffect, transform.position, transform.rotation);
+
+            SFXManager.instance.PlaySFXPitched(16);
 
             //SFXManager.instance.PlaySFX(3);
 
@@ -60,5 +74,18 @@ public class PlayerHealthController : MonoBehaviour
         }
 
         healthSlider.value = currentHealth;
+    }
+
+    // 新增：傷害閃爍效果協程
+    private IEnumerator DamageFlash()
+    {
+        // 變紅
+        playerSprite.color = Color.red;
+
+        // 等待短暫時間
+        yield return new WaitForSeconds(flashDuration);
+
+        // 恢復原始顏色
+        playerSprite.color = originalColor;
     }
 }
