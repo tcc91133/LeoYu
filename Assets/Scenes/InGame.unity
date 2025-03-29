@@ -1154,6 +1154,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &77954618
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 77954619}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &77954619
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 77954618}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 24.8, y: -15.5, z: -0.08213721}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &79052658
 GameObject:
   m_ObjectHideFlags: 0
@@ -1274,7 +1305,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 889.1072, w: 0}
+  m_margin: {x: 0, y: 0, z: 11.977905, w: -2.2723389}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2013,7 +2044,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 775807942}
   completeManager: {fileID: 826918380}
-  waveDuration: 10
+  waveDuration: 20
   waves:
   - name: Wave00
     segments:
@@ -2041,7 +2072,7 @@ MonoBehaviour:
   - name: Wave04
     segments:
     - tStaretEnd: {x: 0, y: 100}
-      spawnFrequency: 3
+      spawnFrequency: 1
       prefub: {fileID: 1203867063886572898, guid: 7b671e105b8980f44a1c9c8c7ed2d8d5, type: 3}
     - tStaretEnd: {x: 0, y: 34}
       spawnFrequency: 2
@@ -2052,32 +2083,32 @@ MonoBehaviour:
   - name: Wave05
     segments:
     - tStaretEnd: {x: 0, y: 100}
-      spawnFrequency: 3
+      spawnFrequency: 1
       prefub: {fileID: 1203867063886572898, guid: 7b671e105b8980f44a1c9c8c7ed2d8d5, type: 3}
     - tStaretEnd: {x: 0, y: 100}
       spawnFrequency: 2
       prefub: {fileID: 1203867063886572898, guid: 1c767299e375c854a9393eaa0aaa5520, type: 3}
     - tStaretEnd: {x: 0, y: 100}
-      spawnFrequency: 2
+      spawnFrequency: 1
       prefub: {fileID: 1203867063886572898, guid: bbf320b716b20584eba506463d5d89fd, type: 3}
   - name: Wave06
     segments:
     - tStaretEnd: {x: 0, y: 100}
-      spawnFrequency: 4
+      spawnFrequency: 2
       prefub: {fileID: 1203867063886572898, guid: 7b671e105b8980f44a1c9c8c7ed2d8d5, type: 3}
     - tStaretEnd: {x: 0, y: 100}
-      spawnFrequency: 3
+      spawnFrequency: 2
       prefub: {fileID: 1203867063886572898, guid: 1c767299e375c854a9393eaa0aaa5520, type: 3}
     - tStaretEnd: {x: 0, y: 100}
-      spawnFrequency: 3
+      spawnFrequency: 1
       prefub: {fileID: 1203867063886572898, guid: bbf320b716b20584eba506463d5d89fd, type: 3}
   - name: Wave07
     segments:
     - tStaretEnd: {x: 0, y: 100}
-      spawnFrequency: 4
+      spawnFrequency: 2
       prefub: {fileID: 1203867063886572898, guid: 7b671e105b8980f44a1c9c8c7ed2d8d5, type: 3}
     - tStaretEnd: {x: 0, y: 100}
-      spawnFrequency: 4
+      spawnFrequency: 2
       prefub: {fileID: 1203867063886572898, guid: 1c767299e375c854a9393eaa0aaa5520, type: 3}
     - tStaretEnd: {x: 0, y: 100}
       spawnFrequency: 3
@@ -2085,24 +2116,24 @@ MonoBehaviour:
   - name: Wave08
     segments:
     - tStaretEnd: {x: 0, y: 100}
-      spawnFrequency: 4
+      spawnFrequency: 2
       prefub: {fileID: 1203867063886572898, guid: 7b671e105b8980f44a1c9c8c7ed2d8d5, type: 3}
     - tStaretEnd: {x: 0, y: 100}
-      spawnFrequency: 5
+      spawnFrequency: 2
       prefub: {fileID: 1203867063886572898, guid: 1c767299e375c854a9393eaa0aaa5520, type: 3}
     - tStaretEnd: {x: 0, y: 100}
-      spawnFrequency: 2
+      spawnFrequency: 1
       prefub: {fileID: 1203867063886572898, guid: bbf320b716b20584eba506463d5d89fd, type: 3}
   - name: Wave09
     segments:
-    - tStaretEnd: {x: 33, y: 100}
-      spawnFrequency: 5
+    - tStaretEnd: {x: 50, y: 100}
+      spawnFrequency: 3
       prefub: {fileID: 1203867063886572898, guid: 7b671e105b8980f44a1c9c8c7ed2d8d5, type: 3}
-    - tStaretEnd: {x: 0, y: 100}
-      spawnFrequency: 5
+    - tStaretEnd: {x: 50, y: 100}
+      spawnFrequency: 3
       prefub: {fileID: 1203867063886572898, guid: 1c767299e375c854a9393eaa0aaa5520, type: 3}
     - tStaretEnd: {x: 50, y: 100}
-      spawnFrequency: 5
+      spawnFrequency: 3
       prefub: {fileID: 1203867063886572898, guid: bbf320b716b20584eba506463d5d89fd, type: 3}
 --- !u!4 &160582747
 Transform:
@@ -7115,28 +7146,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats:
-  - speed: 0.35
+  - speed: 0.25
     damage: 1
     range: 1.75
     timeBetweenAttacks: 8
     amount: 0
     duration: 6
     upgradeText: speed*0.35
-  - speed: 0.25
+  - speed: 0.35
     damage: 1
     range: 1.75
     timeBetweenAttacks: 8
     amount: 0
     duration: 6
     upgradeText: damage+2
-  - speed: 0.25
+  - speed: 0.35
     damage: 3
     range: 1.75
     timeBetweenAttacks: 8
     amount: 0
     duration: 6
     upgradeText: range*2.5
-  - speed: 0.25
+  - speed: 0.35
     damage: 3
     range: 2.5
     timeBetweenAttacks: 8
@@ -7254,7 +7285,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 5.6939864
+  orthographic size: 7.3
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -7298,8 +7329,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f312ede2daf0d846952b7a67ec12c7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minLimit: {x: -15.3, y: -20}
-  maxLimit: {x: 15.5, y: 16.3}
+  minLimit: {x: -12.4, y: -18.5}
+  maxLimit: {x: 12.8, y: 14.8}
 --- !u!1 &522061994
 GameObject:
   m_ObjectHideFlags: 0
@@ -9096,14 +9127,14 @@ MonoBehaviour:
     duration: 6
     upgradeText: speed*1.4
   - speed: 1.4
-    damage: 5
+    damage: 6
     range: 1.5
     timeBetweenAttacks: 8
     amount: 1
     duration: 6
     upgradeText: range*2
-  - speed: 1.3
-    damage: 5
+  - speed: 1.4
+    damage: 6
     range: 2
     timeBetweenAttacks: 8
     amount: 1
@@ -25681,3 +25712,4 @@ SceneRoots:
   - {fileID: 2146047010}
   - {fileID: 160582747}
   - {fileID: 826918381}
+  - {fileID: 77954619}

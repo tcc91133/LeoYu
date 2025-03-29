@@ -120,26 +120,49 @@ public class WaveManager : MonoBehaviour
         }
     }
 
-    /* private void DefeatAllEnemies()
-     {
-         while (transform.childCount > 0)
-         {
-             Transform child = transform.transform.GetChild(0);
-             child.SetParent(null);
-             Object.Destroy(child.gameObject);
-         }
-     }*/
+
 
     private Vector2 GetSpawnPosition()
     {
-        Vector2 direction = Random.onUnitSphere;
-        Vector2 offset = direction.normalized * Random.Range(6, 10);
-        Vector2 targetPosition = (Vector2)playerTransform.transform.position + offset;
+        Camera cam = Camera.main;
+        if (cam == null) return playerTransform.position; // 防止相机为空
 
-        targetPosition.x = Mathf.Clamp(targetPosition.x, -22, 22);
-        targetPosition.y = Mathf.Clamp(targetPosition.y, -22, 22);
+        // 计算相机视野的边界
+        float camHeight = cam.orthographicSize;
+        float camWidth = camHeight * cam.aspect;
 
-        return targetPosition;
+        // 设置地图边界（假设地图是固定大小）
+        float mapMinX = -22f, mapMaxX = 22f;
+        float mapMinY = -22f, mapMaxY = 22f;
+
+        Vector2 spawnPos;
+        int maxAttempts = 10; // 限制尝试次数，防止死循环
+
+        do
+        {
+            // 计算随机方向并确保在相机外部
+            Vector2 direction = Random.insideUnitCircle.normalized;
+            float spawnDistance = Random.Range(1.2f, 1.5f) * Mathf.Max(camWidth, camHeight); // 保证在相机外
+
+            // 计算生成位置
+            spawnPos = (Vector2)cam.transform.position + direction * spawnDistance;
+
+            // 限制位置在地图范围内
+            spawnPos.x = Mathf.Clamp(spawnPos.x, mapMinX, mapMaxX);
+            spawnPos.y = Mathf.Clamp(spawnPos.y, mapMinY, mapMaxY);
+
+            maxAttempts--;
+        } while (maxAttempts > 0 && IsPositionInCameraView(spawnPos)); // 确保位置不在相机内
+
+        return spawnPos;
+    }
+    private bool IsPositionInCameraView(Vector2 position)
+    {
+        Camera cam = Camera.main;
+        if (cam == null) return false;
+
+        Vector3 viewportPoint = cam.WorldToViewportPoint(position);
+        return viewportPoint.x > 0 && viewportPoint.x < 1 && viewportPoint.y > 0 && viewportPoint.y < 1;
     }
 }
 

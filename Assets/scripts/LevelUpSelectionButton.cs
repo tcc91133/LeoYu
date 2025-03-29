@@ -48,27 +48,27 @@ public class LevelUpSelectionButton : MonoBehaviour
             // 找到第一个有变化的属性并返回
             if (nextStats.damage != currentStats.damage)
             {
-                description = $"傷害 +{nextStats.damage - currentStats.damage:F2}";
+                description = $"傷害 + {nextStats.damage - currentStats.damage:F1}";
             }
             else if (nextStats.speed != currentStats.speed)
             {
-                description = $"速度 +{nextStats.speed - currentStats.speed:F2}";
+                description = $"速度 + {nextStats.speed - currentStats.speed:F1}";
             }
             else if (nextStats.range != currentStats.range)
             {
-                description = $"攻擊範圍 +{nextStats.range - currentStats.range:F2}";
+                description = $"攻擊範圍 + {nextStats.range - currentStats.range:F1}";
             }
             else if (Mathf.Abs(nextStats.timeBetweenAttacks - currentStats.timeBetweenAttacks) > 0.1f)
             {
-                description = $"攻擊間隔 {(nextStats.timeBetweenAttacks - currentStats.timeBetweenAttacks > 0 ? "+" : "")}{nextStats.timeBetweenAttacks - currentStats.timeBetweenAttacks:F2}";
+                description = $"攻擊間隔 {(nextStats.timeBetweenAttacks - currentStats.timeBetweenAttacks > 0 ? "+" : "")}{nextStats.timeBetweenAttacks - currentStats.timeBetweenAttacks:F1}";
             }
             else if (nextStats.amount != currentStats.amount)
             {
-                description = $"數量 +{nextStats.amount - currentStats.amount:F2}";
+                description = $"數量 + {nextStats.amount - currentStats.amount:F1}";
             }
             else if (nextStats.duration != currentStats.duration)
             {
-                description = $"持續時間 +{nextStats.duration - currentStats.duration:F2}";
+                description = $"持續時間 + {nextStats.duration - currentStats.duration:F1}";
             }
         }
         else
