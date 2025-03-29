@@ -962,12 +962,12 @@ MonoBehaviour:
     timeBetweenAttacks: 1.5
     amount: 1
     duration: 1.25
-    upgradeText: amount+1
+    upgradeText: amount+2
   - speed: 0
     damage: 5
     range: 1
     timeBetweenAttacks: 1.5
-    amount: 2
+    amount: 3
     duration: 1.25
     upgradeText: time between*1.25
   - speed: 0
@@ -976,14 +976,14 @@ MonoBehaviour:
     timeBetweenAttacks: 1.25
     amount: 2
     duration: 1.25
-    upgradeText: range*1.5
+    upgradeText: range*1.75
   - speed: 0
     damage: 5
-    range: 1.5
+    range: 1.75
     timeBetweenAttacks: 1
     amount: 2
     duration: 1.25
-    upgradeText: More Damage
+    upgradeText: MAX
   weaponLevel: 0
   statsUpdated: 0
   icon: {fileID: -903333556, guid: 2e45cedd6b4c1d749a0c16c4692d477d, type: 3}
@@ -7128,17 +7128,17 @@ MonoBehaviour:
     timeBetweenAttacks: 8
     amount: 0
     duration: 6
-    upgradeText: damage+1
+    upgradeText: damage+2
   - speed: 0.25
-    damage: 2
+    damage: 3
     range: 1.75
     timeBetweenAttacks: 8
     amount: 0
     duration: 6
-    upgradeText: range*2.25
+    upgradeText: range*2.5
   - speed: 0.25
-    damage: 2
-    range: 2.25
+    damage: 3
+    range: 2.5
     timeBetweenAttacks: 8
     amount: 0
     duration: 6
@@ -8141,26 +8141,30 @@ MonoBehaviour:
     value: 5
   - cost: 5
     value: 6
+  - cost: 5
+    value: 6
   health:
   - cost: 0
     value: 50
   - cost: 10
     value: 55
+  - cost: 10
+    value: 55
   pickupRange:
   - cost: 0
     value: 2
-  - cost: 50
-    value: 2.2
+  - cost: 20
+    value: 2.4
   maxWeapons:
   - cost: 0
     value: 3
-  - cost: 500
+  - cost: 30
     value: 4
-  - cost: 2000
+  - cost: 50
     value: 5
-  moveSpeedLevelCount: 50
-  healthLevelCount: 50
-  pickupRangeLevelCount: 50
+  moveSpeedLevelCount: 5
+  healthLevelCount: 5
+  pickupRangeLevelCount: 3
   moveSpeedLevel: 0
   healthLevel: 0
   pickupRangeLevel: 0
@@ -8738,30 +8742,30 @@ MonoBehaviour:
   - speed: 0
     damage: 10
     range: 1
-    timeBetweenAttacks: 2
+    timeBetweenAttacks: 1.5
     amount: 1
-    duration: 0.5
+    duration: 1
     upgradeText: Damage+5
   - speed: 0
     damage: 15
     range: 1
-    timeBetweenAttacks: 2
+    timeBetweenAttacks: 1.5
     amount: 1
-    duration: 0.5
+    duration: 1
     upgradeText: amount+1
   - speed: 0
     damage: 15
     range: 1
-    timeBetweenAttacks: 2
+    timeBetweenAttacks: 1.5
     amount: 2
-    duration: 0.5
-    upgradeText: Lonrer Sword Time
+    duration: 1
+    upgradeText: Lonrer Sword
   - speed: 0
     damage: 15
-    range: 1.5
-    timeBetweenAttacks: 2
+    range: 1.75
+    timeBetweenAttacks: 1.5
     amount: 2
-    duration: 0.5
+    duration: 1
     upgradeText: MAX
   weaponLevel: 0
   statsUpdated: 0
@@ -9082,16 +9086,16 @@ MonoBehaviour:
     range: 1.5
     timeBetweenAttacks: 8
     amount: 1
-    duration: 4
-    upgradeText: damge+1
+    duration: 6
+    upgradeText: damge+2
   - speed: 1
-    damage: 5
+    damage: 6
     range: 1.5
     timeBetweenAttacks: 8
     amount: 1
-    duration: 4
-    upgradeText: speed*1.3
-  - speed: 1.3
+    duration: 6
+    upgradeText: speed*1.4
+  - speed: 1.4
     damage: 5
     range: 1.5
     timeBetweenAttacks: 8
@@ -9100,7 +9104,7 @@ MonoBehaviour:
     upgradeText: range*2
   - speed: 1.3
     damage: 5
-    range: 1.75
+    range: 2
     timeBetweenAttacks: 8
     amount: 1
     duration: 6
@@ -10289,29 +10293,29 @@ MonoBehaviour:
   - speed: 6
     damage: 5
     range: 1.25
-    timeBetweenAttacks: 1.25
+    timeBetweenAttacks: 1
     amount: 1
     duration: 0.5
-    upgradeText: amount+1
+    upgradeText: amount+2
   - speed: 6
     damage: 5
     range: 1.25
-    timeBetweenAttacks: 1.25
-    amount: 2
+    timeBetweenAttacks: 1
+    amount: 3
     duration: 0.5
-    upgradeText: time between*0.75
+    upgradeText: time between*0.5
   - speed: 6
     damage: 5
     range: 1.25
-    timeBetweenAttacks: 0.75
-    amount: 2
+    timeBetweenAttacks: 0.5
+    amount: 3
     duration: 0.5
-    upgradeText: Damage+3
+    upgradeText: amount+3
   - speed: 6
     damage: 8
     range: 1.25
-    timeBetweenAttacks: 0.75
-    amount: 2
+    timeBetweenAttacks: 0.5
+    amount: 6
     duration: 0.5
     upgradeText: MAX
   weaponLevel: 0
@@ -18834,7 +18838,7 @@ MonoBehaviour:
   expLevels: 000000000100000002000000
   currentLevel: 1
   levelCount: 100
-  maxExpPerLevel: 25
+  maxExpPerLevel: 20
   weaponsToUpgrade: []
 --- !u!4 &1616003878
 Transform:
