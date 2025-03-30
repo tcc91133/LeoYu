@@ -7,6 +7,11 @@ public class WaveManager : MonoBehaviour
 {
     public Transform playerTransform;
 
+
+    [Header("Spawn Settings")]
+    [SerializeField] private float minSpawnDistance = 1.0f;
+    [SerializeField] private float maxSpawnDistance = 2.0f;
+
     private WaveManageUI ui;
 
     public CompleteManager completeManager;
@@ -127,11 +132,9 @@ public class WaveManager : MonoBehaviour
         Camera cam = Camera.main;
         if (cam == null) return playerTransform.position; // 防止相机为空
 
-        // 计算相机视野的边界
         float camHeight = cam.orthographicSize;
         float camWidth = camHeight * cam.aspect;
 
-        // 设置地图边界（假设地图是固定大小）
         float mapMinX = -22f, mapMaxX = 22f;
         float mapMinY = -22f, mapMaxY = 22f;
 
@@ -140,19 +143,15 @@ public class WaveManager : MonoBehaviour
 
         do
         {
-            // 计算随机方向并确保在相机外部
             Vector2 direction = Random.insideUnitCircle.normalized;
-            float spawnDistance = Random.Range(1.2f, 1.5f) * Mathf.Max(camWidth, camHeight); // 保证在相机外
-
-            // 计算生成位置
+            float spawnDistance = Random.Range(minSpawnDistance, maxSpawnDistance) * Mathf.Max(camWidth, camHeight);
             spawnPos = (Vector2)cam.transform.position + direction * spawnDistance;
 
-            // 限制位置在地图范围内
             spawnPos.x = Mathf.Clamp(spawnPos.x, mapMinX, mapMaxX);
             spawnPos.y = Mathf.Clamp(spawnPos.y, mapMinY, mapMaxY);
 
-            maxAttempts--;
-        } while (maxAttempts > 0 && IsPositionInCameraView(spawnPos)); // 确保位置不在相机内
+            // 确保生成位置没有碰撞体
+        } while (maxAttempts-- > 0 && (IsPositionInCameraView(spawnPos) || Physics2D.OverlapCircle(spawnPos, 0.5f) != null));
 
         return spawnPos;
     }
