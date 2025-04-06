@@ -7920,7 +7920,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 14.60573, y: 28.099998}
+  m_AnchoredPosition: {x: -2, y: 28.099998}
   m_SizeDelta: {x: -116.611465, y: -171.2278}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &586956485
@@ -10315,7 +10315,7 @@ MonoBehaviour:
     duration: 0.5
     upgradeText: amount+3
   - speed: 6
-    damage: 8
+    damage: 7
     range: 1.25
     timeBetweenAttacks: 0.5
     amount: 6

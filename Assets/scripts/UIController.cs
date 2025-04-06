@@ -49,14 +49,25 @@ public class UIController : MonoBehaviour
 
         }
     }
-    
+
     public void UpdateExperience(int currentExp, int levelExp, int currentLvl)
     {
-        explvlSlider.maxValue = levelExp;
-        explvlSlider.value = currentExp;
-
-        expLvlText.text = "等級: " + currentLvl;
+        // 如果当前等级已经达到30级，直接设置滑块为满值
+        if (currentLvl >= 30)
+        {
+            explvlSlider.maxValue = levelExp;  // 保持最大值为当前的等级经验要求
+            explvlSlider.value = levelExp;     // 设置滑块的值为最大值
+            expLvlText.text = "已滿級";         // 显示已满级
+            levelUpPanel.SetActive(false);     // 隐藏升级UI面板
+        }
+        else
+        {
+            explvlSlider.maxValue = levelExp;  // 更新最大值为当前等级所需经验
+            explvlSlider.value = currentExp;   // 更新滑块的值为当前经验
+            expLvlText.text = "等級: " + currentLvl;  // 显示当前等级
+        }
     }
+
     public void SkipLevelUp() 
     {
         levelUpPanel.SetActive(false);
@@ -133,4 +144,5 @@ public class UIController : MonoBehaviour
             }
         }
     }
+
 }
