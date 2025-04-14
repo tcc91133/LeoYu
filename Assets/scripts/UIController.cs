@@ -53,7 +53,7 @@ public class UIController : MonoBehaviour
     public void UpdateExperience(int currentExp, int levelExp, int currentLvl)
     {
         // 如果当前等级已经达到30级，直接设置滑块为满值
-        if (currentLvl >= 30)
+        if (currentLvl >= 20)
         {
             explvlSlider.maxValue = levelExp;  // 保持最大值为当前的等级经验要求
             explvlSlider.value = levelExp;     // 设置滑块的值为最大值

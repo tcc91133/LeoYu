@@ -17,17 +17,19 @@ public class ExperienceLevelController : MonoBehaviour
 
     public List<int> expLevels;
     public int currentLevel = 1, levelCount = 100;
-    public int maxExpPerLevel = 25; // 新增：每級最大所需經驗值
+    public int maxExpPerLevel = 35; // 新增：每級最大所需經驗值
 
     public List<Weapon> weaponsToUpgrade;
 
     void Start()
     {
-        while (expLevels.Count < levelCount)
+        expLevels.Clear();
+        expLevels.Add(3); // 等級1 → 2
+
+        for (int i = 1; i < levelCount; i++)
         {
-            // 修改這裡：加入上限檢查
-            int nextLevelExp = Mathf.CeilToInt(expLevels[expLevels.Count - 1] * 3.5f);
-            expLevels.Add(Mathf.Min(nextLevelExp, maxExpPerLevel)); // 確保不超過上限
+            int nextExp = Mathf.CeilToInt(expLevels[i - 1] * 1.2f); // 每級都 *2
+            expLevels.Add(nextExp);
         }
     }
 
@@ -43,9 +45,9 @@ public class ExperienceLevelController : MonoBehaviour
         UIController.instance.UpdateExperience(currentExperience, expLevels[currentLevel], currentLevel);
     }
 
-    public void SpawnExp(Vector3 position,int expValue)
+    public void SpawnExp(Vector3 position, int expValue)
     {
-        Instantiate(pickup, position, Quaternion.identity).expValue = expValue;  
+        Instantiate(pickup, position, Quaternion.identity).expValue = expValue;
     }
 
     void LevelUp()
@@ -60,7 +62,7 @@ public class ExperienceLevelController : MonoBehaviour
         }
 
         // 当等级达到30级时，不再显示升级UI
-        if (currentLevel >= 30)
+        if (currentLevel >= 20)
         {
             UIController.instance.levelUpPanel.SetActive(false);  // 隐藏升级UI面板
             return;  // 不继续执行后续的升级操作
@@ -70,7 +72,7 @@ public class ExperienceLevelController : MonoBehaviour
 
         Time.timeScale = 0f;
 
-      
+
         weaponsToUpgrade.Clear();
 
         List<Weapon> availableWeapons = new List<Weapon>();

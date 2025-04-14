@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
-
+using Pathfinding;
 public class WaveManager : MonoBehaviour
 {
     public Transform playerTransform;
 
+
+    [Header("Enemy Scaling")]
+    public float healthGrowthPerWave = 1.2f;  // 每波血量成長 20%
+    public float speedGrowthPerWave = 1.1f;   // 每波移動速度成長 10%
 
     [Header("Spawn Settings")]
     [SerializeField] private float minSpawnDistance = 1.0f;
@@ -81,27 +85,56 @@ public class WaveManager : MonoBehaviour
     }
     private void manageCurrentWave()
     {
-        Wave CurrentWave = waves[currentWaveIndex];
-        for (int i = 0; i < CurrentWave.segments.Count; i++)
+        Wave currentWave = waves[currentWaveIndex];
+
+        for (int i = 0; i < currentWave.segments.Count; i++)
         {
-            WaveSegment segment = CurrentWave.segments[i];
+            WaveSegment segment = currentWave.segments[i];
             float tStart = segment.tStaretEnd.x / 100 * waveDuration;
             float tEnd = segment.tStaretEnd.y / 100 * waveDuration;
 
             if (timer < tStart || timer > tEnd)
                 continue;
-            float timeSinceSegmentSrart = timer - tStart;
+
+            float timeSinceSegmentStart = timer - tStart;
             float spawnDelay = 1f / segment.spawnFrequency;
 
-            if (timeSinceSegmentSrart / spawnDelay > localCounters[i])
+            if (timeSinceSegmentStart / spawnDelay > localCounters[i])
             {
-                Instantiate(segment.prefub, GetSpawnPosition(), Quaternion.identity, transform);
+                GameObject enemyObj = Instantiate(segment.prefub, GetSpawnPosition(), Quaternion.identity, transform);
+
+                EnemyController enemy = enemyObj.GetComponent<EnemyController>();
+                if (enemy != null)
+                {
+                    // 血量強化（每3波強化一次）
+                    int applyTimes = currentWaveIndex / 5;
+                    float healthScale = Mathf.Pow(1.5f, applyTimes);
+                    float speedScale = Mathf.Pow(1f, applyTimes);
+
+                    enemy.health *= healthScale;
+
+                    // AIPath 強化
+                    var aiPath = enemyObj.GetComponent<AIPath>();
+                    if (aiPath != null)
+                    {
+                        aiPath.canMove = true;
+                        aiPath.maxSpeed = Mathf.Max(1f, aiPath.maxSpeed) * speedScale;
+                        aiPath.maxSpeed = Mathf.Min(aiPath.maxSpeed, 10f); // 上限避免過快
+                    }
+                }
+
                 localCounters[i]++;
             }
         }
+
         timer += Time.deltaTime;
     }
-
+    private void UpgradeEnemies()
+    {
+        // 這裡可以設定你的血量增長或移動速度增長的係數
+        healthGrowthPerWave *= 1f;  // 每三波後增加血量的增長比例
+        speedGrowthPerWave *= 1f;   // 每三波後增加移動速度的增長比例
+    }
     private void StartWaveTransition()
     {
         isTimeOn = false; // 停止计时
