@@ -1,91 +1,83 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class PlayerHealthController : MonoBehaviour
 {
     public static PlayerHealthController instance;
 
-    private void Awake()
-    {
-        instance = this;
-    }
-
+    [Header("Health Settings")]
     public float currentHealth, maxHealth;
-    // Start is called before the first frame update
-
     public Slider healthSlider;
-
     public GameObject deathEffect;
 
-    // 新增變數
-    public SpriteRenderer playerSprite; // 玩家的SpriteRenderer組件
-    public float flashDuration = 0.1f; // 變紅持續時間
-    private Color originalColor; // 儲存原始顏色
+    [Header("Damage Effect")]
+    public SpriteRenderer playerSprite;
+    public float flashDuration = 0.1f;
+
+    private Color originalColor;
+    private Coroutine damageFlashCoroutine;
+    private bool isDead;
+
+    private void Awake() => instance = this;
 
     void Start()
     {
         maxHealth = PlayerStatController.instance.health[0].value;
         currentHealth = maxHealth;
-
         healthSlider.maxValue = maxHealth;
         healthSlider.value = currentHealth;
 
-        // 初始化
-        if (playerSprite == null)
-        {
-            playerSprite = GetComponent<SpriteRenderer>();
-        }
-        if (playerSprite != null)
-        {
-            originalColor = playerSprite.color;
-        }
+        if (playerSprite == null) playerSprite = GetComponent<SpriteRenderer>();
+        originalColor = playerSprite != null ? playerSprite.color : Color.white;
     }
 
     public void TakeDamage(float damageToTake)
     {
+        if (isDead || !gameObject.activeInHierarchy) return;
+
         SFXManager.instance.PlaySFXPitched(8);
-        currentHealth -= damageToTake;
-
-        // 新增：受到傷害時變紅
-        if (playerSprite != null)
-        {
-            StartCoroutine(DamageFlash());
-        }
-
-        if (currentHealth <= 0)
-        {
-            gameObject.SetActive(false);
-
-            LevelManager.instance.EndLevel();
-
-            Instantiate(deathEffect, transform.position, transform.rotation);
-
-            SFXManager.instance.PlaySFXPitched(16);
-
-            //SFXManager.instance.PlaySFX(3);
-
-            EnemySpawner[] spawners = FindObjectsOfType<EnemySpawner>();
-            foreach (var spawner in spawners)
-            {
-                spawner.StopSpawning();
-            }
-        }
-
+        currentHealth = Mathf.Max(0, currentHealth - damageToTake);
         healthSlider.value = currentHealth;
+
+        if (damageFlashCoroutine != null) StopCoroutine(damageFlashCoroutine);
+        damageFlashCoroutine = StartCoroutine(DamageFlash());
+
+        if (currentHealth <= 0) Die();
     }
 
-    // 新增：傷害閃爍效果協程
     private IEnumerator DamageFlash()
     {
-        // 變紅
-        playerSprite.color = Color.red;
+        if (playerSprite != null)
+        {
+            playerSprite.color = Color.red;
+            yield return new WaitForSeconds(flashDuration);
+            playerSprite.color = originalColor;
+        }
+        damageFlashCoroutine = null;
+    }
 
-        // 等待短暫時間
-        yield return new WaitForSeconds(flashDuration);
+    private void Die()
+    {
+        isDead = true;
+        StopAllCoroutines();
 
-        // 恢復原始顏色
-        playerSprite.color = originalColor;
+        GetComponent<PlayerDash>()?.OnDeath();
+        GetComponent<PlayerController>().enabled = false;
+
+        Instantiate(deathEffect, transform.position, Quaternion.identity);
+        SFXManager.instance.PlaySFXPitched(16);
+
+        foreach (var spawner in FindObjectsOfType<EnemySpawner>())
+            spawner.StopSpawning();
+
+        StartCoroutine(DeactivateAfterFrame());
+    }
+
+    private IEnumerator DeactivateAfterFrame()
+    {
+        yield return null;
+        gameObject.SetActive(false);
+        LevelManager.instance.EndLevel();
     }
 }

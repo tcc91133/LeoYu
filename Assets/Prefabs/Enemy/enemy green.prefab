@@ -172,6 +172,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59ca192c1294301438b74f604e4a81d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemySprite: {fileID: 0}
+  flashDuration: 0.1
   theRB: {fileID: 7389982108694919658}
   moveSpeed: 10
   damage: 5
