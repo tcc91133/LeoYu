@@ -1,48 +1,45 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 using Pathfinding;
+
 public class WaveManager : MonoBehaviour
 {
     public Transform playerTransform;
 
-
     [Header("Enemy Scaling")]
-    public float healthGrowthPerWave = 1.2f;  // 每波血量成長 20%
-    public float speedGrowthPerWave = 1.1f;   // 每波移動速度成長 10%
+    public float healthGrowthPerWave = 1.2f;
+    public float speedGrowthPerWave = 1.1f;
 
     [Header("Spawn Settings")]
     [SerializeField] private float minSpawnDistance = 1.0f;
     [SerializeField] private float maxSpawnDistance = 2.0f;
 
-    private WaveManageUI ui;
-
-    public CompleteManager completeManager;
-    private bool isFinalWave = false;
     [Header("Settings")]
     [SerializeField] private float waveDuration;
     private float timer;
     private bool isTimeOn;
     private int currentWaveIndex;
+    private bool isFinalWave = false;
 
     [Header("Waves")]
     [SerializeField] private Wave[] waves;
     private List<float> localCounters = new List<float>();
+
+    private WaveManageUI ui;
+    public CompleteManager completeManager;
 
     private void Awake()
     {
         ui = GetComponent<WaveManageUI>();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        StarWave(currentWaveIndex);
+        StartWave(currentWaveIndex);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (playerTransform == null || !playerTransform.gameObject.activeInHierarchy)
         {
@@ -50,120 +47,125 @@ public class WaveManager : MonoBehaviour
             return;
         }
 
-        if (!isTimeOn)
-        {
-            return;
-        }
+        if (!isTimeOn) return;
 
         if (timer < waveDuration)
         {
-            manageCurrentWave();
-
-            string timerString = ((int)(waveDuration - timer)).ToString();
-            ui.UpdateTimerText(timerString);
+            ManageCurrentWave();
+            ui.UpdateTimerText(((int)(waveDuration - timer)).ToString());
         }
         else
         {
             StartWaveTransition();
         }
     }
+
     private void StopGeneratingEnemies()
     {
-        isTimeOn = false; // 停止计时器
-        timer = 0f; // 重置计时器
+        isTimeOn = false;
+        timer = 0f;
     }
-    private void StarWave(int waveIndex)
+
+    private void StartWave(int waveIndex)
     {
-        ui.UpdateWaveText("波次" + (currentWaveIndex + 1) + "/" + waves.Length);
+        ui.UpdateWaveText($"波次 {waveIndex + 1}/{waves.Length}");
 
         localCounters.Clear();
         foreach (WaveSegment segment in waves[waveIndex].segments)
             localCounters.Add(1);
 
+        // Spawn immediately
+        foreach (WaveSegment segment in waves[waveIndex].segments)
+        {
+            if (segment.spawnImmediately && segment.immediateSpawnCount > 0)
+            {
+                for (int i = 0; i < segment.immediateSpawnCount; i++)
+                {
+                    SpawnEnemy(segment.prefub);
+                }
+            }
+        }
+
         isTimeOn = true;
         timer = 0f;
     }
-    private void manageCurrentWave()
+
+    private void ManageCurrentWave()
     {
         Wave currentWave = waves[currentWaveIndex];
 
         for (int i = 0; i < currentWave.segments.Count; i++)
         {
             WaveSegment segment = currentWave.segments[i];
-            float tStart = segment.tStaretEnd.x / 100 * waveDuration;
-            float tEnd = segment.tStaretEnd.y / 100 * waveDuration;
 
-            if (timer < tStart || timer > tEnd)
-                continue;
+            if (segment.spawnImmediately) continue;
+
+            float tStart = segment.tStartEnd.x / 100 * waveDuration;
+            float tEnd = segment.tStartEnd.y / 100 * waveDuration;
+
+            if (timer < tStart || timer > tEnd) continue;
 
             float timeSinceSegmentStart = timer - tStart;
             float spawnDelay = 1f / segment.spawnFrequency;
 
             if (timeSinceSegmentStart / spawnDelay > localCounters[i])
             {
-                GameObject enemyObj = Instantiate(segment.prefub, GetSpawnPosition(), Quaternion.identity, transform);
-
-                EnemyController enemy = enemyObj.GetComponent<EnemyController>();
-                if (enemy != null)
-                {
-                    // 血量強化（每3波強化一次）
-                    int applyTimes = currentWaveIndex / 5;
-                    float healthScale = Mathf.Pow(1.5f, applyTimes);
-                    float speedScale = Mathf.Pow(1f, applyTimes);
-
-                    enemy.health *= healthScale;
-
-                    // AIPath 強化
-                    var aiPath = enemyObj.GetComponent<AIPath>();
-                    if (aiPath != null)
-                    {
-                        aiPath.canMove = true;
-                        aiPath.maxSpeed = Mathf.Max(1f, aiPath.maxSpeed) * speedScale;
-                        aiPath.maxSpeed = Mathf.Min(aiPath.maxSpeed, 10f); // 上限避免過快
-                    }
-                }
-
+                SpawnEnemy(segment.prefub);
                 localCounters[i]++;
             }
         }
 
         timer += Time.deltaTime;
     }
-    private void UpgradeEnemies()
+
+    private void SpawnEnemy(GameObject prefab)
     {
-        // 這裡可以設定你的血量增長或移動速度增長的係數
-        healthGrowthPerWave *= 1f;  // 每三波後增加血量的增長比例
-        speedGrowthPerWave *= 1f;   // 每三波後增加移動速度的增長比例
+        GameObject enemyObj = Instantiate(prefab, GetSpawnPosition(), Quaternion.identity, transform);
+        EnemyController enemy = enemyObj.GetComponent<EnemyController>();
+
+        if (enemy != null)
+        {
+            int applyTimes = currentWaveIndex / 5;
+            float healthScale = Mathf.Pow(1.5f, applyTimes);
+            float speedScale = Mathf.Pow(1f, applyTimes);
+
+            enemy.health *= healthScale;
+
+            var aiPath = enemyObj.GetComponent<AIPath>();
+            if (aiPath != null)
+            {
+                aiPath.canMove = true;
+                aiPath.maxSpeed = Mathf.Clamp(aiPath.maxSpeed * speedScale, 1f, 10f);
+            }
+        }
     }
+
     private void StartWaveTransition()
     {
-        isTimeOn = false; // 停止计时
-        currentWaveIndex++; // 进入下一个波次
+        isTimeOn = false;
+        currentWaveIndex++;
 
-        if (currentWaveIndex >= waves.Length) // 如果是最后一波
+        if (currentWaveIndex >= waves.Length)
         {
-            isFinalWave = true; // 设置标志，表示现在是最后一波
-            ui.UpdateTimerText(""); // 清空时间显示
-            ui.UpdateWaveText("波次完成，擊敗所有敵人"); // 显示通关UI
+            isFinalWave = true;
+            ui.UpdateTimerText("");
+            ui.UpdateWaveText("波次完成，擊敗所有敵人");
 
-            // 通知 CompleteManager 检查敌人是否消失
             if (completeManager != null)
             {
-                completeManager.CheckEnemiesCleared(isFinalWave); // 传递是否为最后一波
+                completeManager.CheckEnemiesCleared(isFinalWave);
             }
         }
         else
         {
-            StarWave(currentWaveIndex); // 启动下一个波次
+            StartWave(currentWaveIndex);
         }
     }
-
-
 
     private Vector2 GetSpawnPosition()
     {
         Camera cam = Camera.main;
-        if (cam == null) return playerTransform.position; // 防止相机为空
+        if (cam == null) return playerTransform.position;
 
         float camHeight = cam.orthographicSize;
         float camWidth = camHeight * cam.aspect;
@@ -172,7 +174,7 @@ public class WaveManager : MonoBehaviour
         float mapMinY = -22f, mapMaxY = 22f;
 
         Vector2 spawnPos;
-        int maxAttempts = 10; // 限制尝试次数，防止死循环
+        int maxAttempts = 10;
 
         do
         {
@@ -182,12 +184,11 @@ public class WaveManager : MonoBehaviour
 
             spawnPos.x = Mathf.Clamp(spawnPos.x, mapMinX, mapMaxX);
             spawnPos.y = Mathf.Clamp(spawnPos.y, mapMinY, mapMaxY);
-
-            // 确保生成位置没有碰撞体
         } while (maxAttempts-- > 0 && (IsPositionInCameraView(spawnPos) || Physics2D.OverlapCircle(spawnPos, 0.5f) != null));
 
         return spawnPos;
     }
+
     private bool IsPositionInCameraView(Vector2 position)
     {
         Camera cam = Camera.main;
@@ -208,7 +209,10 @@ public struct Wave
 [System.Serializable]
 public struct WaveSegment
 {
-    [MinMaxSlider(0, 100)] public Vector2 tStaretEnd;
+    [MinMaxSlider(0, 100)] public Vector2 tStartEnd;
     public float spawnFrequency;
     public GameObject prefub;
+
+    public bool spawnImmediately;
+    public int immediateSpawnCount;
 }

@@ -9,10 +9,10 @@ public class BossSkillManager : MonoBehaviour
     public float playerCheckRadius = 10f;
 
     [Header("Skills")]
-    public List<MonoBehaviour> skillComponents = new List<MonoBehaviour>();
+    public List<MonoBehaviour> skillComponents = new();
 
     [Header("初始延遲")]
-    public float initialDelay = 3f; // BOSS生成後等待幾秒才開始放技能
+    public float initialDelay = 3f;
 
     [Header("Category Cooldowns")]
     public float meleeCategoryCooldown = 1f;
@@ -24,13 +24,15 @@ public class BossSkillManager : MonoBehaviour
 
     private Dictionary<SkillCategory, List<IBossSkill>> _categorizedSkills = new();
     private Dictionary<SkillCategory, float> _nextAvailableCategoryTime = new();
-
     private IBossSkill _currentSkill;
     private SkillCategory? _lastCategory;
     private float _lastCastTime;
+    private float _spawnTime;
 
     void Start()
     {
+        _spawnTime = Time.time;
+
         foreach (SkillCategory category in System.Enum.GetValues(typeof(SkillCategory)))
         {
             _categorizedSkills[category] = new List<IBossSkill>();
@@ -49,10 +51,7 @@ public class BossSkillManager : MonoBehaviour
 
     void Update()
     {
-        if (Time.time < initialDelay) return;
-
-        if (_currentSkill == null)
-            TryCastRandomSkill();
+        if (Time.time - _spawnTime < initialDelay) return;
 
         if (_currentSkill == null)
             TryCastRandomSkill();
@@ -77,20 +76,16 @@ public class BossSkillManager : MonoBehaviour
 
             if (_lastCategory.HasValue && category != SkillCategory.Unrestricted)
             {
-                if ((_lastCategory == SkillCategory.Melee || _lastCategory == SkillCategory.Ranged) &&
-                    category == _lastCategory.Value &&
-                    Time.time - _lastCastTime < delayAfterMeleeOrRanged)
-                {
+                bool isSameAsLast = category == _lastCategory.Value;
+                bool lastWasMeleeOrRanged = _lastCategory == SkillCategory.Melee || _lastCategory == SkillCategory.Ranged;
+                if (isSameAsLast && lastWasMeleeOrRanged && Time.time - _lastCastTime < delayAfterMeleeOrRanged)
                     continue;
-                }
             }
 
             foreach (var skill in skills)
             {
                 float distance = Vector2.Distance(transform.position, playerPos);
-                bool inRange = distance >= skill.RangeMin && distance <= skill.RangeMax;
-
-                if (skill.IsAvailable && inRange && skill.Weight > 0)
+                if (skill.IsAvailable && distance >= skill.RangeMin && distance <= skill.RangeMax && skill.Weight > 0)
                 {
                     availableSkills.Add(skill);
                     totalWeight += skill.Weight;
@@ -98,23 +93,22 @@ public class BossSkillManager : MonoBehaviour
             }
         }
 
-        if (availableSkills.Count > 0)
-        {
-            float randomPoint = Random.Range(0f, totalWeight);
-            float accumulated = 0f;
+        if (availableSkills.Count == 0) return;
 
-            foreach (var skill in availableSkills)
+        float randomPoint = Random.Range(0f, totalWeight);
+        float accumulated = 0f;
+
+        foreach (var skill in availableSkills)
+        {
+            accumulated += skill.Weight;
+            if (randomPoint <= accumulated)
             {
-                accumulated += skill.Weight;
-                if (randomPoint <= accumulated)
-                {
-                    _currentSkill = skill;
-                    _lastCategory = skill.Category;
-                    _lastCastTime = Time.time;
-                    _nextAvailableCategoryTime[skill.Category] = Time.time + GetCategoryCooldown(skill.Category);
-                    StartCoroutine(CastSkillRoutine(skill));
-                    break;
-                }
+                _currentSkill = skill;
+                _lastCategory = skill.Category;
+                _lastCastTime = Time.time;
+                _nextAvailableCategoryTime[skill.Category] = Time.time + GetCategoryCooldown(skill.Category);
+                StartCoroutine(CastSkillRoutine(skill));
+                break;
             }
         }
     }

@@ -12,6 +12,10 @@ public class BossMeleeSkill : MonoBehaviour, IBossSkill
         public float speed = 8f;
         public float distance = 3f;
         public float recoveryTime = 0.5f;
+        public float xOffset = 1f;
+        public float yOffset = 0f;
+        public float prefabScale = 1f;
+        public CameraController.ShakeType shakeType = CameraController.ShakeType.Medium; // 新增：每段攻擊的震動強度
     }
 
     [Header("Melee Settings")]
@@ -31,6 +35,7 @@ public class BossMeleeSkill : MonoBehaviour, IBossSkill
     private float _cooldownTimer;
     private bool _isExecuting;
     private Transform _player;
+    private CameraController _cameraController; // 新增：相機控制參考
 
     public bool IsAvailable => !_isExecuting && _cooldownTimer <= 0f;
     public float Cooldown => cooldown;
@@ -42,6 +47,7 @@ public class BossMeleeSkill : MonoBehaviour, IBossSkill
     void Awake()
     {
         _player = GameObject.FindWithTag("Player")?.transform;
+        _cameraController = Camera.main?.GetComponent<CameraController>(); // 自動獲取主相機的控制器
     }
 
     void Update()
@@ -56,7 +62,6 @@ public class BossMeleeSkill : MonoBehaviour, IBossSkill
 
         _isExecuting = true;
         _cooldownTimer = cooldown;
-
         aiPath.enabled = false;
 
         foreach (var atk in attackPhases)
@@ -78,7 +83,21 @@ public class BossMeleeSkill : MonoBehaviour, IBossSkill
 
             if (meleePrefab)
             {
-                Instantiate(meleePrefab, transform.position, Quaternion.identity);
+                float xOffset = atk.xOffset;
+                if (_player.position.x < transform.position.x)
+                    xOffset *= -1f;
+
+                Vector3 spawnPos = transform.position + new Vector3(xOffset, atk.yOffset, 0f);
+                GameObject obj = Instantiate(meleePrefab, spawnPos, Quaternion.identity);
+
+                float scale = atk.prefabScale;
+                obj.transform.localScale = new Vector3(scale, scale, 1f);
+
+                // 新增：觸發相機震動
+                if (_cameraController != null)
+                {
+                    _cameraController.ShakeCamera(atk.shakeType);
+                }
             }
 
             yield return new WaitForSeconds(atk.recoveryTime);

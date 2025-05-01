@@ -21,8 +21,9 @@ GameObject:
   - component: {fileID: -971031321253243047}
   - component: {fileID: -1836356536026873766}
   - component: {fileID: 467114363602511782}
-  - component: {fileID: 6701698480949332352}
   - component: {fileID: 70280540170566239}
+  - component: {fileID: -318689129864969342}
+  - component: {fileID: 6701698480949332352}
   m_Layer: 7
   m_Name: Capsule
   m_TagString: Enemy
@@ -158,7 +159,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &7155315748423442098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,11 +325,11 @@ MonoBehaviour:
   jumpHeightOffset: 5
   hangTime: 0.1
   recoveryTime: 1.25
-  cooldown: 10
+  cooldown: 7
   arcHeight: 1.25
   category: 0
   rangeMin: 3
-  rangeMax: 10
+  rangeMax: 15
   weight: 1
   hitCollider: {fileID: 8103840887358850357}
   disableAllColliders: 0
@@ -348,7 +349,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   castTime: 3
-  cooldown: 10
+  cooldown: 15
   rangeMin: 0
   rangeMax: 150
   weight: 1
@@ -368,7 +369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   castTime: 1.5
-  cooldown: 10
+  cooldown: 15
   bossAnimator: {fileID: 0}
   castAnimationName: Cast
   summonPrefabs:
@@ -388,30 +389,6 @@ MonoBehaviour:
   rangeMin: 0
   rangeMax: 150
   weight: 1
---- !u!114 &6701698480949332352
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5462398091272074913}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd52490d75ed9e2498671f268b72bd1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerTag: Player
-  playerCheckRadius: 150
-  skillComponents:
-  - {fileID: 70280540170566239}
-  - {fileID: -971031321253243047}
-  - {fileID: -1836356536026873766}
-  - {fileID: 467114363602511782}
-  initialDelay: 4
-  meleeCategoryCooldown: 1
-  rangedCategoryCooldown: 2
-  unrestrictedCategoryCooldown: 15
-  delayAfterMeleeOrRanged: 1
 --- !u!114 &70280540170566239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -430,15 +407,27 @@ MonoBehaviour:
     speed: 30
     distance: 2
     recoveryTime: 0.05
+    xOffset: 2
+    yOffset: -0.5
+    prefabScale: 1.5
+    shakeType: 1
   - chargeTime: 0.05
     speed: 30
     distance: 2
     recoveryTime: 0.1
+    xOffset: 2
+    yOffset: -0.5
+    prefabScale: 1.5
+    shakeType: 1
   - chargeTime: 0.5
     speed: 50
     distance: 3.5
     recoveryTime: 0.5
-  meleePrefab: {fileID: 0}
+    xOffset: 2
+    yOffset: -0.5
+    prefabScale: 3
+    shakeType: 2
+  meleePrefab: {fileID: 2516510672788793949, guid: 2df3b2aae68d81140816462f018d3687, type: 3}
   animator: {fileID: 0}
   attackAnimName: Attack
   cooldown: 1.5
@@ -446,3 +435,54 @@ MonoBehaviour:
   rangeMax: 5
   weight: 10
   category: 0
+--- !u!114 &-318689129864969342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5462398091272074913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 258a4101c341132469b7388ea2c9fba6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chargeTime: 1
+  castDuration: 2
+  recoveryTime: 0.5
+  cooldown: 3
+  aiPath: {fileID: 0}
+  rangeMin: 8
+  rangeMax: 15
+  weight: 1
+  category: 1
+  projectilePrefab: {fileID: 2895148491853310007, guid: 8e661ed046ca9b746aaf84c1971c9ea9, type: 3}
+  projectileCount: 10
+  xOffset: 2
+  yOffset: 0
+  prefabScale: 1
+--- !u!114 &6701698480949332352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5462398091272074913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd52490d75ed9e2498671f268b72bd1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTag: Player
+  playerCheckRadius: 150
+  skillComponents:
+  - {fileID: -971031321253243047}
+  - {fileID: -1836356536026873766}
+  - {fileID: 467114363602511782}
+  - {fileID: 70280540170566239}
+  - {fileID: -318689129864969342}
+  initialDelay: 4
+  meleeCategoryCooldown: 2
+  rangedCategoryCooldown: 2
+  unrestrictedCategoryCooldown: 15
+  delayAfterMeleeOrRanged: 1

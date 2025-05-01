@@ -2016,103 +2016,146 @@ MonoBehaviour:
   speedGrowthPerWave: 1.2
   minSpawnDistance: 0.5
   maxSpawnDistance: 1
-  completeManager: {fileID: 826918380}
   waveDuration: 20
   waves:
   - name: Wave10
     segments:
-    - tStaretEnd: {x: 0, y: 0.1}
-      spawnFrequency: 10000
+    - tStartEnd: {x: 0, y: 50}
+      spawnFrequency: 0
       prefub: {fileID: 5462398091272074913, guid: 2519a95541f84f741aea36ead4265965, type: 3}
+      spawnImmediately: 1
+      immediateSpawnCount: 1
   - name: Wave00
     segments:
-    - tStaretEnd: {x: 0, y: 50}
+    - tStartEnd: {x: 0, y: 50}
       spawnFrequency: 1
       prefub: {fileID: 1203867063886572898, guid: 7b671e105b8980f44a1c9c8c7ed2d8d5, type: 3}
+      spawnImmediately: 0
+      immediateSpawnCount: 0
   - name: Wave01
     segments:
-    - tStaretEnd: {x: 0, y: 100}
+    - tStartEnd: {x: 0, y: 50}
       spawnFrequency: 2
       prefub: {fileID: 1203867063886572898, guid: 1c767299e375c854a9393eaa0aaa5520, type: 3}
+      spawnImmediately: 0
+      immediateSpawnCount: 0
   - name: Wave02
     segments:
-    - tStaretEnd: {x: 0, y: 100}
+    - tStartEnd: {x: 0, y: 50}
       spawnFrequency: 1
       prefub: {fileID: 1203867063886572898, guid: bbf320b716b20584eba506463d5d89fd, type: 3}
+      spawnImmediately: 0
+      immediateSpawnCount: 0
   - name: Wave03
     segments:
-    - tStaretEnd: {x: 0, y: 100}
+    - tStartEnd: {x: 0, y: 0}
       spawnFrequency: 2
       prefub: {fileID: 1203867063886572898, guid: 7b671e105b8980f44a1c9c8c7ed2d8d5, type: 3}
-    - tStaretEnd: {x: 0, y: 100}
+      spawnImmediately: 0
+      immediateSpawnCount: 0
+    - tStartEnd: {x: 0, y: 70}
       spawnFrequency: 2
       prefub: {fileID: 1203867063886572898, guid: 1c767299e375c854a9393eaa0aaa5520, type: 3}
-  - name: Wave04
-    segments:
-    - tStaretEnd: {x: 0, y: 100}
-      spawnFrequency: 1
-      prefub: {fileID: 1203867063886572898, guid: 7b671e105b8980f44a1c9c8c7ed2d8d5, type: 3}
-    - tStaretEnd: {x: 0, y: 34}
-      spawnFrequency: 2
-      prefub: {fileID: 1203867063886572898, guid: 1c767299e375c854a9393eaa0aaa5520, type: 3}
-    - tStaretEnd: {x: 33, y: 100}
-      spawnFrequency: 1
-      prefub: {fileID: 1203867063886572898, guid: bbf320b716b20584eba506463d5d89fd, type: 3}
-  - name: Wave05
-    segments:
-    - tStaretEnd: {x: 0, y: 100}
-      spawnFrequency: 1
-      prefub: {fileID: 1203867063886572898, guid: 7b671e105b8980f44a1c9c8c7ed2d8d5, type: 3}
-    - tStaretEnd: {x: 0, y: 100}
-      spawnFrequency: 2
-      prefub: {fileID: 1203867063886572898, guid: 1c767299e375c854a9393eaa0aaa5520, type: 3}
-    - tStaretEnd: {x: 0, y: 100}
-      spawnFrequency: 1
-      prefub: {fileID: 1203867063886572898, guid: bbf320b716b20584eba506463d5d89fd, type: 3}
+      spawnImmediately: 0
+      immediateSpawnCount: 0
   - name: Wave06
     segments:
-    - tStaretEnd: {x: 0, y: 50}
+    - tStartEnd: {x: 0, y: 70}
       spawnFrequency: 1
       prefub: {fileID: 1203867063886572898, guid: 7b671e105b8980f44a1c9c8c7ed2d8d5, type: 3}
-    - tStaretEnd: {x: 0, y: 50}
+      spawnImmediately: 0
+      immediateSpawnCount: 0
+    - tStartEnd: {x: 20, y: 70}
       spawnFrequency: 1
       prefub: {fileID: 1203867063886572898, guid: 1c767299e375c854a9393eaa0aaa5520, type: 3}
-    - tStaretEnd: {x: 0, y: 100}
+      spawnImmediately: 0
+      immediateSpawnCount: 0
+    - tStartEnd: {x: 50, y: 100}
       spawnFrequency: 1
       prefub: {fileID: 1203867063886572898, guid: bbf320b716b20584eba506463d5d89fd, type: 3}
+      spawnImmediately: 0
+      immediateSpawnCount: 0
+  - name: Wave04
+    segments:
+    - tStartEnd: {x: 0, y: 50}
+      spawnFrequency: 1
+      prefub: {fileID: 1203867063886572898, guid: 7b671e105b8980f44a1c9c8c7ed2d8d5, type: 3}
+      spawnImmediately: 0
+      immediateSpawnCount: 0
+    - tStartEnd: {x: 0, y: 80}
+      spawnFrequency: 2
+      prefub: {fileID: 1203867063886572898, guid: 1c767299e375c854a9393eaa0aaa5520, type: 3}
+      spawnImmediately: 0
+      immediateSpawnCount: 0
+  - name: Wave05
+    segments:
+    - tStartEnd: {x: 0, y: 70}
+      spawnFrequency: 1
+      prefub: {fileID: 1203867063886572898, guid: 7b671e105b8980f44a1c9c8c7ed2d8d5, type: 3}
+      spawnImmediately: 0
+      immediateSpawnCount: 0
+    - tStartEnd: {x: 50, y: 100}
+      spawnFrequency: 1
+      prefub: {fileID: 1203867063886572898, guid: 1c767299e375c854a9393eaa0aaa5520, type: 3}
+      spawnImmediately: 0
+      immediateSpawnCount: 0
+    - tStartEnd: {x: 0, y: 50}
+      spawnFrequency: 2
+      prefub: {fileID: 1203867063886572898, guid: bbf320b716b20584eba506463d5d89fd, type: 3}
+      spawnImmediately: 0
+      immediateSpawnCount: 0
   - name: Wave07
     segments:
-    - tStaretEnd: {x: 0, y: 100}
+    - tStartEnd: {x: 0, y: 100}
       spawnFrequency: 2
       prefub: {fileID: 1203867063886572898, guid: 7b671e105b8980f44a1c9c8c7ed2d8d5, type: 3}
-    - tStaretEnd: {x: 0, y: 100}
+      spawnImmediately: 0
+      immediateSpawnCount: 0
+    - tStartEnd: {x: 0, y: 50}
       spawnFrequency: 1
       prefub: {fileID: 1203867063886572898, guid: 1c767299e375c854a9393eaa0aaa5520, type: 3}
-    - tStaretEnd: {x: 0, y: 100}
-      spawnFrequency: 1
+      spawnImmediately: 0
+      immediateSpawnCount: 0
+    - tStartEnd: {x: 0, y: 50}
+      spawnFrequency: 2
       prefub: {fileID: 1203867063886572898, guid: bbf320b716b20584eba506463d5d89fd, type: 3}
+      spawnImmediately: 0
+      immediateSpawnCount: 0
   - name: Wave08
     segments:
-    - tStaretEnd: {x: 0, y: 100}
-      spawnFrequency: 2
+    - tStartEnd: {x: 0, y: 100}
+      spawnFrequency: 1
       prefub: {fileID: 1203867063886572898, guid: 7b671e105b8980f44a1c9c8c7ed2d8d5, type: 3}
-    - tStaretEnd: {x: 0, y: 100}
+      spawnImmediately: 0
+      immediateSpawnCount: 0
+    - tStartEnd: {x: 0, y: 100}
       spawnFrequency: 2
       prefub: {fileID: 1203867063886572898, guid: 1c767299e375c854a9393eaa0aaa5520, type: 3}
-    - tStaretEnd: {x: 0, y: 100}
+      spawnImmediately: 0
+      immediateSpawnCount: 0
+    - tStartEnd: {x: 0, y: 100}
       spawnFrequency: 1
       prefub: {fileID: 1203867063886572898, guid: bbf320b716b20584eba506463d5d89fd, type: 3}
+      spawnImmediately: 0
+      immediateSpawnCount: 0
   - name: Wave09
     segments:
-    - tStaretEnd: {x: 0, y: 100}
-      spawnFrequency: 0
+    - tStartEnd: {x: 0, y: 100}
+      spawnFrequency: 2
       prefub: {fileID: 1203867063886572898, guid: 7b671e105b8980f44a1c9c8c7ed2d8d5, type: 3}
-    - tStaretEnd: {x: 0, y: 100}
+      spawnImmediately: 0
+      immediateSpawnCount: 0
+    - tStartEnd: {x: 0, y: 100}
       spawnFrequency: 2
       prefub: {fileID: 1203867063886572898, guid: 1c767299e375c854a9393eaa0aaa5520, type: 3}
-    - tStaretEnd: {x: 0, y: 100}
-      spawnFrequency: 0
+      spawnImmediately: 0
+      immediateSpawnCount: 0
+    - tStartEnd: {x: 0, y: 100}
+      spawnFrequency: 2
       prefub: {fileID: 1203867063886572898, guid: bbf320b716b20584eba506463d5d89fd, type: 3}
+      spawnImmediately: 0
+      immediateSpawnCount: 0
+  completeManager: {fileID: 826918380}
 --- !u!4 &160582747
 Transform:
   m_ObjectHideFlags: 0
@@ -2169,8 +2212,8 @@ Transform:
   m_GameObject: {fileID: 168297116}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.555, y: 12.359, z: 0}
-  m_LocalScale: {x: 0.5858881, y: 0.8529329, z: 1.2837746}
+  m_LocalPosition: {x: 1.555, y: 12.2319, z: 0}
+  m_LocalScale: {x: 0.5858881, y: 1.1071068, z: 1.2837746}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 329199036}
@@ -7061,8 +7104,8 @@ Transform:
   m_GameObject: {fileID: 495467517}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.7071067, w: 0.70710695}
-  m_LocalPosition: {x: -3.068, y: 1.824, z: 0}
-  m_LocalScale: {x: 1.1392516, y: 0.40509638, z: 0.80200994}
+  m_LocalPosition: {x: -3.07179, y: 1.6805, z: 0}
+  m_LocalScale: {x: 1.4261607, y: 0.39752108, z: 0.80200994}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 329199036}
@@ -7424,7 +7467,7 @@ MonoBehaviour:
       m_RotationOrder: 4
   mediumShake:
     duration: 0.3
-    magnitude: 0.3
+    magnitude: 0.175
     decayCurve:
       serializedVersion: 2
       m_Curve:
@@ -8032,8 +8075,8 @@ Transform:
   m_GameObject: {fileID: 584268530}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.7071067, w: 0.70710695}
-  m_LocalPosition: {x: 1.2740002, y: 12.622, z: 0}
-  m_LocalScale: {x: 0.95384747, y: 0.239783, z: 0.80200994}
+  m_LocalPosition: {x: 1.33083, y: 12.4519, z: 0}
+  m_LocalScale: {x: 1.2941326, y: 0.35344014, z: 0.80200994}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 329199036}
@@ -8389,14 +8432,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed:
   - cost: 0
-    value: 5
+    value: 10
   - cost: 5
     value: 6
   - cost: 5
     value: 7
   health:
   - cost: 0
-    value: 50
+    value: 500
   - cost: 10
     value: 55
   - cost: 10
@@ -17225,8 +17268,8 @@ Transform:
   m_GameObject: {fileID: 1383696714}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.7071067, w: 0.70710695}
-  m_LocalPosition: {x: -3.108, y: 12.622, z: 0}
-  m_LocalScale: {x: 0.95384747, y: 0.239783, z: 0.80200994}
+  m_LocalPosition: {x: -3.0602, y: 12.4894, z: 0}
+  m_LocalScale: {x: 1.2190266, y: 0.33539483, z: 0.80200994}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 329199036}
@@ -19328,8 +19371,8 @@ Transform:
   m_GameObject: {fileID: 1564716383}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.7071067, w: 0.70710695}
-  m_LocalPosition: {x: 1.2780004, y: 1.8799999, z: 0}
-  m_LocalScale: {x: 0.95384747, y: 0.239783, z: 0.80200994}
+  m_LocalPosition: {x: 1.3487, y: 1.662, z: 0}
+  m_LocalScale: {x: 1.3897845, y: 0.38118303, z: 0.80200994}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 329199036}
@@ -21403,8 +21446,8 @@ Transform:
   m_GameObject: {fileID: 1719404719}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.527, y: 1.6799998, z: 0}
-  m_LocalScale: {x: 0.6174017, y: 0.8201643, z: 1.2344537}
+  m_LocalPosition: {x: 1.53762, y: 1.5274, z: 0}
+  m_LocalScale: {x: 0.63864034, y: 1.1253475, z: 1.2344537}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 329199036}
