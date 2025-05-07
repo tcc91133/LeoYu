@@ -5,40 +5,46 @@ using Pathfinding;
 public class BossJumpAttack : MonoBehaviour, IBossSkill
 {
     [Header("Jump Settings")]
-    public AIPath aiPath;                     // A*路径组件
-    public float chargeTime = 1f;             // 蓄力时间
-    public float jumpSpeed = 10f;             // 跳跃速度
-    public float jumpHeightOffset = 3f;       // 跳跃高度偏移
-    public float hangTime = 0.5f;             // 空中悬停时间
-    public float recoveryTime = 1f;           // 落地恢复时间
-    public float cooldown = 5f;               // 技能冷却
-    public float arcHeight = 2f;              // 抛物线高度
+    public AIPath aiPath;
+    public float chargeTime = 1f;
+    public float jumpSpeed = 10f;
+    public float jumpHeightOffset = 3f;
+    public float hangTime = 0.5f;
+    public float recoveryTime = 1f;
+    public float cooldown = 5f;
+    public float arcHeight = 2f;
     public SkillCategory category = SkillCategory.Melee;
     public SkillCategory Category => category;
 
-
-    [Header("Range Settings")]  // 新增專用範圍設定區塊
-    public float rangeMin = 2f;               // 最小有效距離
-    public float rangeMax = 5f;               // 最大有效距離
-    public float weight = 1f;                 // 技能權重
+    [Header("Range Settings")]
+    public float rangeMin = 2f;
+    public float rangeMax = 5f;
+    public float weight = 1f;
 
     [Header("Collision Settings")]
-    public Collider2D hitCollider;            // 攻击判定碰撞体
-    public bool disableAllColliders = true;   // 是否禁用所有碰撞体
+    public Collider2D hitCollider;
+    public bool disableAllColliders = true;
 
     [Header("Effects")]
-    public GameObject landingEffectPrefab;    // 落地特效
-    public float landingEffectYOffset = -1f;  // 特效Y轴偏移
-    public float cameraShakeIntensity = 3f;   // 镜头震动强度
+    public GameObject landingEffectPrefab;
+    public float landingEffectYOffset = -1f;
+    public float cameraShakeIntensity = 3f;
 
-    // 状态变量
+    [Header("Animation")]
+    public Animator animator;
+    public string walkingParam = "IsWalking";
+    public string chargingParam = "IsCharging";
+    public string jumpingParam = "IsJumping";
+    public string fallingParam = "IsFalling";
+    public string landingTrigger = "Landing";
+
+    // 狀態變量
     private bool _isExecuting;
     private float _cooldownTimer;
     private Vector2 _landingPosition;
     private CameraController _cameraController;
     private Collider2D[] _allColliders;
 
-    // ========== 接口屬性 ========== //
     public bool IsAvailable => !_isExecuting && _cooldownTimer <= 0f;
     public float Cooldown => cooldown;
     public float RangeMin => rangeMin;
@@ -51,12 +57,30 @@ public class BossJumpAttack : MonoBehaviour, IBossSkill
         _allColliders = GetComponents<Collider2D>();
         if (hitCollider == null && _allColliders.Length > 0)
             hitCollider = _allColliders[0];
+
+        if (animator == null)
+            animator = GetComponent<Animator>();
     }
 
     void Update()
     {
         if (_cooldownTimer > 0)
             _cooldownTimer -= Time.deltaTime;
+
+        // 只在非技能執行狀態更新走路動畫
+        if (!_isExecuting && animator != null && aiPath != null)
+        {
+            bool isMoving = aiPath.enabled && aiPath.velocity.magnitude > 0.1f;
+            animator.SetBool(walkingParam, isMoving);
+
+            // 確保其他動畫參數被重置
+            if (isMoving)
+            {
+                animator.SetBool(chargingParam, false);
+                animator.SetBool(jumpingParam, false);
+                animator.SetBool(fallingParam, false);
+            }
+        }
     }
 
     public IEnumerator ExecuteSkill()
@@ -70,6 +94,11 @@ public class BossJumpAttack : MonoBehaviour, IBossSkill
     {
         // === 階段1：蓄力準備 ===
         aiPath.enabled = false;
+        if (animator != null)
+        {
+            animator.SetBool(walkingParam, false);
+            animator.SetBool(chargingParam, true);
+        }
         yield return new WaitForSeconds(chargeTime);
 
         // === 階段2：計算落點 ===
@@ -78,7 +107,6 @@ public class BossJumpAttack : MonoBehaviour, IBossSkill
             player.transform.position :
             transform.position + Vector3.right * 3f;
 
-        // 確保落點在有效範圍內
         float distance = Vector2.Distance(transform.position, _landingPosition);
         _landingPosition = Vector2.Lerp(
             transform.position,
@@ -92,13 +120,36 @@ public class BossJumpAttack : MonoBehaviour, IBossSkill
         Vector2 startPos = transform.position;
         Vector2 peakPos = new Vector2(_landingPosition.x, _landingPosition.y + jumpHeightOffset);
 
+        // 起跳動畫
+        if (animator != null)
+        {
+            animator.SetBool(chargingParam, false);
+            animator.SetBool(jumpingParam, true);
+        }
+
         yield return StartCoroutine(ParabolicMovement(startPos, peakPos)); // 上升
+
+        // 切換到降落動畫
+        if (animator != null)
+        {
+            animator.SetBool(jumpingParam, false);
+            animator.SetBool(fallingParam, true);
+        }
+
         yield return new WaitForSeconds(hangTime); // 懸停
         yield return StartCoroutine(ParabolicMovement(transform.position, _landingPosition)); // 下降
 
         // === 階段4：落地效果 ===
         SetCollidersActive(true);
         SpawnLandingEffects();
+
+        // 觸發著陸動畫
+        if (animator != null)
+        {
+            animator.SetBool(fallingParam, false);
+            animator.SetTrigger(landingTrigger);
+        }
+
         yield return new WaitForSeconds(recoveryTime);
 
         aiPath.enabled = true;
@@ -153,7 +204,6 @@ public class BossJumpAttack : MonoBehaviour, IBossSkill
         SetCollidersActive(true);
     }
 
-    // 調試用範圍可視化
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
