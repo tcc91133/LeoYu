@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
@@ -17,13 +17,13 @@ public class BossSummonSkill : MonoBehaviour, IBossSkill
     public float castTime = 2f;
     public float cooldown = 15f;
     public Animator bossAnimator;
-    public string castAnimationName = "Cast";
+    public string summonAnimationName = "Summon"; // 单一动画名称
 
     public float Cooldown => cooldown;
 
     [Header("Summon Settings")]
     public List<SummonPrefab> summonPrefabs = new List<SummonPrefab>();
-    public float spawnPadding = 0.5f;
+    public float spawnInterval = 0.3f;
 
     [Header("Camera Bounds")]
     public Vector2 cameraMinBounds = new Vector2(-10, -5);
@@ -36,63 +36,99 @@ public class BossSummonSkill : MonoBehaviour, IBossSkill
     public float weight = 1f;
 
     private AIPath aiPath;
-    private Camera mainCamera;
-    private bool isFinished;
+    private bool isCasting;
 
-    void Start()
+    void Awake()
     {
         aiPath = GetComponent<AIPath>();
-        mainCamera = Camera.main;
-
-        if (TryGetCameraBoundsFromController(out var min, out var max))
-        {
-            cameraMinBounds = min;
-            cameraMaxBounds = max;
-        }
+        if (bossAnimator == null)
+            bossAnimator = GetComponent<Animator>();
     }
 
     public SkillCategory Category => category;
     public float RangeMin => rangeMin;
     public float RangeMax => rangeMax;
     public float Weight => weight;
-    public bool IsAvailable => true;
+    public bool IsAvailable => !isCasting;
 
     public IEnumerator ExecuteSkill()
     {
-        isFinished = false;
+        isCasting = true;
         aiPath.enabled = false;
 
-        TriggerSmallCameraShake();
-
+        // 1. 动画系统重置（安全版）
         if (bossAnimator != null)
         {
-            bossAnimator.Play(castAnimationName);
+            bossAnimator.Rebind();
+            yield return null; // 确保重置完成
+            bossAnimator.Play("EmptyState", 0, 0); // 过渡空状态
+            yield return null;
+
+            // 精确控制动画播放
+            AnimatorStateInfo state = bossAnimator.GetCurrentAnimatorStateInfo(0);
+            float speedMultiplier = state.length / castTime;
+            bossAnimator.Play(summonAnimationName, 0, 0f);
+            bossAnimator.speed = speedMultiplier;
+
+            Debug.Log($"动画长度: {state.length} 速度系数: {speedMultiplier}");
         }
 
-        yield return new WaitForSeconds(castTime);
-
+        // 2. 生成位置预检测
+        List<Vector2> validSpawnPositions = new List<Vector2>();
         foreach (var summon in summonPrefabs)
         {
             for (int i = 0; i < summon.count; i++)
             {
                 Vector2 spawnPos = GetValidSpawnPosition(summon.spawnRadius);
-                Instantiate(summon.prefab, spawnPos, Quaternion.identity);
-                yield return new WaitForSeconds(spawnPadding);
+                if (!Physics2D.OverlapCircle(spawnPos, 0.5f))
+                {
+                    validSpawnPositions.Add(spawnPos);
+                    Debug.DrawRay(spawnPos, Vector2.up, Color.green, 2f);
+                }
             }
         }
 
+        // 3. 同步动画与生成
+        float timer = 0;
+        int spawnIndex = 0;
+        while (timer < castTime)
+        {
+            timer += Time.deltaTime;
+
+            // 按进度生成敌人
+            if (spawnIndex < validSpawnPositions.Count &&
+                timer >= (castTime * spawnIndex / validSpawnPositions.Count))
+            {
+                Instantiate(
+                    summonPrefabs[0].prefab, // 假设使用第一个预制件
+                    validSpawnPositions[spawnIndex],
+                    Quaternion.identity
+                );
+                spawnIndex++;
+            }
+
+            yield return null;
+        }
+
+        // 4. 强制状态重置
+        if (bossAnimator != null)
+        {
+            bossAnimator.speed = 1;
+            bossAnimator.Play("Idle", 0, 0.9f); // 直接跳到动画末尾
+        }
+
+        isCasting = false;
         aiPath.enabled = true;
-        isFinished = true;
     }
 
-    public void OnSkillFinished() { }
-
-    private void TriggerSmallCameraShake()
+    public void OnSkillFinished()
     {
-        var controller = FindObjectOfType<CameraController>();
-        if (controller != null)
+        if (isCasting)
         {
-            controller.ShakeCamera(CameraController.ShakeType.Small);
+            if (bossAnimator != null)
+                bossAnimator.Play("Idle"); // 强制回到待机状态
+            aiPath.enabled = true;
+            isCasting = false;
         }
     }
 
@@ -112,36 +148,11 @@ public class BossSummonSkill : MonoBehaviour, IBossSkill
         };
     }
 
-    private bool TryGetCameraBoundsFromController(out Vector2 min, out Vector2 max)
-    {
-        var controller = FindObjectOfType<CameraController>();
-        if (controller != null)
-        {
-            min = controller.minLimit;
-            max = controller.maxLimit;
-            return true;
-        }
-
-        min = cameraMinBounds;
-        max = cameraMaxBounds;
-        return false;
-    }
-
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.cyan;
         Vector3 center = (Vector3)(cameraMinBounds + cameraMaxBounds) * 0.5f;
         Vector3 size = (Vector3)(cameraMaxBounds - cameraMinBounds);
         Gizmos.DrawWireCube(center, size);
-
-        foreach (var summon in summonPrefabs)
-        {
-            Gizmos.color = new Color(1, 0.5f, 0, 0.3f);
-            Vector2 scaledMin = (Vector2)center + (cameraMinBounds - (Vector2)center) * summon.spawnRadius;
-            Vector2 scaledMax = (Vector2)center + (cameraMaxBounds - (Vector2)center) * summon.spawnRadius;
-            Vector2 scaledCenter = (scaledMin + scaledMax) * 0.5f;
-            Vector2 scaledSize = scaledMax - scaledMin;
-            Gizmos.DrawWireCube(scaledCenter, scaledSize);
-        }
     }
 }

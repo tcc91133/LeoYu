@@ -342,7 +342,6 @@ MonoBehaviour:
   recoveryTime: 1.25
   cooldown: 7
   arcHeight: 1.25
-  category: 0
   rangeMin: 3
   rangeMax: 15
   weight: 1
@@ -355,8 +354,8 @@ MonoBehaviour:
   walkingParam: IsWalking
   chargingParam: IsCharging
   jumpingParam: IsJumping
-  fallingParam: IsFalling
   landingTrigger: Landing
+  category: 0
 --- !u!114 &-1836356536026873766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -391,8 +390,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   castTime: 1.5
   cooldown: 15
-  bossAnimator: {fileID: 0}
-  castAnimationName: Cast
+  bossAnimator: {fileID: 8281665427756539119}
+  summonAnimationName: Summon
   summonPrefabs:
   - prefab: {fileID: 1203867063886572898, guid: 1c767299e375c854a9393eaa0aaa5520, type: 3}
     count: 5
@@ -403,7 +402,7 @@ MonoBehaviour:
   - prefab: {fileID: 1203867063886572898, guid: 7b671e105b8980f44a1c9c8c7ed2d8d5, type: 3}
     count: 5
     spawnRadius: 1
-  spawnPadding: 0.1
+  spawnInterval: 0.3
   cameraMinBounds: {x: -12.4, y: -18.5}
   cameraMaxBounds: {x: 12.8, y: 14.8}
   category: 2
@@ -473,14 +472,17 @@ MonoBehaviour:
   recoveryTime: 0.5
   cooldown: 3
   aiPath: {fileID: 0}
+  bossAnimator: {fileID: 8281665427756539119}
+  shootAnimationName: Shoot
+  animationSpeedMultiplier: 1
   rangeMin: 8
   rangeMax: 15
   weight: 1
   category: 1
   projectilePrefab: {fileID: 2895148491853310007, guid: 8e661ed046ca9b746aaf84c1971c9ea9, type: 3}
   projectileCount: 10
-  xOffset: 2
-  yOffset: 0
+  xOffset: 4
+  yOffset: -1
   prefabScale: 1
 --- !u!114 &6701698480949332352
 MonoBehaviour:
@@ -497,15 +499,11 @@ MonoBehaviour:
   playerTag: Player
   playerCheckRadius: 150
   skillComponents:
-  - {fileID: -971031321253243047}
-  - {fileID: -1836356536026873766}
-  - {fileID: 467114363602511782}
-  - {fileID: 70280540170566239}
   - {fileID: -318689129864969342}
   initialDelay: 4
-  meleeCategoryCooldown: 20
-  rangedCategoryCooldown: 30
-  unrestrictedCategoryCooldown: 50
+  meleeCategoryCooldown: 10
+  rangedCategoryCooldown: 10
+  unrestrictedCategoryCooldown: 10
   delayAfterMeleeOrRanged: 1
 --- !u!95 &8281665427756539119
 Animator:

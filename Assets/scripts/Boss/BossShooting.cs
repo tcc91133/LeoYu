@@ -9,7 +9,12 @@ public class BossShootingSkill : MonoBehaviour, IBossSkill
     public float castDuration = 2f;
     public float recoveryTime = 1f;
     public float cooldown = 3f;
-    public AIPath aiPath; // 新增 AIPath 參考
+    public AIPath aiPath;
+
+    [Header("動畫控制")]
+    public Animator bossAnimator;
+    public string shootAnimationName = "Shoot";
+    public float animationSpeedMultiplier = 1f;
 
     [Header("技能參數")]
     public float rangeMin = 0f;
@@ -25,7 +30,7 @@ public class BossShootingSkill : MonoBehaviour, IBossSkill
     public float prefabScale = 1f;
 
     private bool _isOnCooldown = false;
-    private bool _isExecuting = false; // 新增執行狀態標記
+    private bool _isExecuting = false;
     private Transform _player;
 
     public bool IsAvailable => !_isOnCooldown && !_isExecuting;
@@ -38,58 +43,83 @@ public class BossShootingSkill : MonoBehaviour, IBossSkill
     void Awake()
     {
         _player = GameObject.FindWithTag("Player")?.transform;
-        if (aiPath == null) // 自動獲取如果未設定
+        if (aiPath == null)
             aiPath = GetComponent<AIPath>();
+
+        if (bossAnimator == null)
+            bossAnimator = GetComponent<Animator>();
     }
 
     public IEnumerator ExecuteSkill()
     {
         _isOnCooldown = true;
         _isExecuting = true;
-        
-        // 關閉 AI 移動
+
+        // 關閉AI移動
         if (aiPath != null)
             aiPath.enabled = false;
 
+        // 1. 播放單次射擊動畫
+        if (bossAnimator != null)
+        {
+            bossAnimator.StopPlayback();
+            bossAnimator.Play(shootAnimationName, -1, 0f);
+
+            // 計算動畫速度以匹配技能時間
+            AnimatorStateInfo state = bossAnimator.GetCurrentAnimatorStateInfo(0);
+            bossAnimator.speed = (state.length / (chargeTime + castDuration)) * animationSpeedMultiplier;
+        }
+
+        // 2. 蓄力階段
         if (chargeTime > 0)
             yield return new WaitForSeconds(chargeTime);
 
+        // 3. 射擊階段
         float interval = castDuration / Mathf.Max(projectileCount, 1);
-
         for (int i = 0; i < projectileCount; i++)
         {
             if (projectilePrefab != null && _player != null)
             {
-                float offsetX = xOffset;
-                if (_player.position.x < transform.position.x)
-                    offsetX *= -1f;
-
-                Vector3 spawnPos = transform.position + new Vector3(offsetX, yOffset, 0f);
-                GameObject obj = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
-
-                obj.transform.localScale = new Vector3(prefabScale, prefabScale, 1f);
-
-                Vector2 dir = (_player.position - spawnPos).normalized;
-                float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-                obj.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+                Vector3 spawnPos = CalculateSpawnPosition();
+                CreateProjectile(spawnPos);
             }
-
             yield return new WaitForSeconds(interval);
         }
 
+        // 4. 恢復階段
         if (recoveryTime > 0)
             yield return new WaitForSeconds(recoveryTime);
 
-        // 重新啟用 AI 移動
-        if (aiPath != null)
-            aiPath.enabled = true;
-
-        _isExecuting = false;
+        // 重置狀態
+        ResetSkill();
     }
 
-    public void OnSkillFinished()
+    private Vector3 CalculateSpawnPosition()
     {
-        // 確保 AI 被重新啟用
+        float offsetX = _player.position.x < transform.position.x ? -xOffset : xOffset;
+        return transform.position + new Vector3(offsetX, yOffset, 0f);
+    }
+
+    private void CreateProjectile(Vector3 spawnPos)
+    {
+        GameObject obj = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
+        obj.transform.localScale = Vector3.one * prefabScale;
+
+        Vector2 dir = (_player.position - spawnPos).normalized;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        obj.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+    }
+
+    private void ResetSkill()
+    {
+        // 重置動畫
+        if (bossAnimator != null)
+        {
+            bossAnimator.speed = 1f;
+            bossAnimator.Play("Idle");
+        }
+
+        // 重新啟用AI
         if (aiPath != null)
             aiPath.enabled = true;
 
@@ -97,9 +127,24 @@ public class BossShootingSkill : MonoBehaviour, IBossSkill
         StartCoroutine(CooldownRoutine());
     }
 
+    public void OnSkillFinished()
+    {
+        ResetSkill();
+    }
+
     private IEnumerator CooldownRoutine()
     {
         yield return new WaitForSeconds(cooldown);
         _isOnCooldown = false;
+    }
+
+    // 除錯用可視化
+    private void OnDrawGizmosSelected()
+    {
+        if (_player != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, _player.position);
+        }
     }
 }
