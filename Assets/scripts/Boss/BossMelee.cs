@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
@@ -15,7 +15,8 @@ public class BossMeleeSkill : MonoBehaviour, IBossSkill
         public float xOffset = 1f;
         public float yOffset = 0f;
         public float prefabScale = 1f;
-        public CameraController.ShakeType shakeType = CameraController.ShakeType.Medium; // ·s¼W¡G¨C¬q§ğÀ»ªº¾_°Ê±j«×
+        public CameraController.ShakeType shakeType = CameraController.ShakeType.Medium;
+        public string attackStateName = "Attack"; // ä½¿ç”¨ç‹€æ…‹åç¨±è€Œéè§¸ç™¼å™¨
     }
 
     [Header("Melee Settings")]
@@ -23,7 +24,12 @@ public class BossMeleeSkill : MonoBehaviour, IBossSkill
     public List<MeleeAttackPhase> attackPhases = new List<MeleeAttackPhase>();
     public GameObject meleePrefab;
     public Animator animator;
-    public string attackAnimName = "Attack";
+
+    [Header("Animation States")]
+    public string chargeStateName = "Charge";
+    public string recoveryStateName = "Recovery";
+    public string idleStateName = "Idle";
+    public float animationTransitionDuration = 0.1f;
 
     [Header("Skill Settings")]
     public float cooldown = 8f;
@@ -35,7 +41,8 @@ public class BossMeleeSkill : MonoBehaviour, IBossSkill
     private float _cooldownTimer;
     private bool _isExecuting;
     private Transform _player;
-    private CameraController _cameraController; // ·s¼W¡G¬Û¾÷±±¨î°Ñ¦Ò
+    private CameraController _cameraController;
+    private Coroutine _currentAttackRoutine;
 
     public bool IsAvailable => !_isExecuting && _cooldownTimer <= 0f;
     public float Cooldown => cooldown;
@@ -47,7 +54,12 @@ public class BossMeleeSkill : MonoBehaviour, IBossSkill
     void Awake()
     {
         _player = GameObject.FindWithTag("Player")?.transform;
-        _cameraController = Camera.main?.GetComponent<CameraController>(); // ¦Û°ÊÀò¨ú¥D¬Û¾÷ªº±±¨î¾¹
+        _cameraController = Camera.main?.GetComponent<CameraController>();
+
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
+        }
     }
 
     void Update()
@@ -58,57 +70,76 @@ public class BossMeleeSkill : MonoBehaviour, IBossSkill
 
     public IEnumerator ExecuteSkill()
     {
-        if (_isExecuting || _player == null) yield break;
+        if (_isExecuting || _player == null || animator == null)
+        {
+            Debug.LogWarning("Cannot execute skill: condition not met");
+            yield break;
+        }
 
         _isExecuting = true;
         _cooldownTimer = cooldown;
-        aiPath.enabled = false;
+        if (aiPath != null) aiPath.enabled = false;
 
-        foreach (var atk in attackPhases)
+        try
         {
-            if (animator) animator.Play(attackAnimName);
-
-            yield return new WaitForSeconds(atk.chargeTime);
-
-            Vector2 dir = (_player.position - transform.position).normalized;
-
-            float moved = 0f;
-            while (moved < atk.distance)
+            foreach (var atk in attackPhases)
             {
-                float step = atk.speed * Time.deltaTime;
-                transform.position += (Vector3)(dir * step);
-                moved += step;
-                yield return null;
-            }
+                Debug.Log($"Starting charge phase: {atk.chargeTime}s");
 
-            if (meleePrefab)
-            {
-                float xOffset = atk.xOffset;
-                if (_player.position.x < transform.position.x)
-                    xOffset *= -1f;
+                // ä½¿ç”¨ CrossFade è€Œä¸æ˜¯ Play
+                animator.CrossFade(chargeStateName, animationTransitionDuration);
+                yield return new WaitForSeconds(atk.chargeTime);
 
-                Vector3 spawnPos = transform.position + new Vector3(xOffset, atk.yOffset, 0f);
-                GameObject obj = Instantiate(meleePrefab, spawnPos, Quaternion.identity);
+                Debug.Log($"Starting attack phase: {atk.attackStateName}");
+                animator.CrossFade(atk.attackStateName, animationTransitionDuration);
 
-                float scale = atk.prefabScale;
-                obj.transform.localScale = new Vector3(scale, scale, 1f);
-
-                // ·s¼W¡GÄ²µo¬Û¾÷¾_°Ê
-                if (_cameraController != null)
+                // è¡åˆºç§»å‹•
+                Vector2 dir = (_player.position - transform.position).normalized;
+                float moved = 0f;
+                while (moved < atk.distance)
                 {
-                    _cameraController.ShakeCamera(atk.shakeType);
+                    float step = atk.speed * Time.deltaTime;
+                    transform.position += (Vector3)(dir * step);
+                    moved += step;
+                    yield return null;
                 }
+
+                // ç”Ÿæˆæ”»æ“Šæ•ˆæœ
+                if (meleePrefab != null)
+                {
+                    float xOffset = atk.xOffset * Mathf.Sign(_player.position.x - transform.position.x);
+                    Vector3 spawnPos = transform.position + new Vector3(xOffset, atk.yOffset, 0f);
+                    Instantiate(meleePrefab, spawnPos, Quaternion.identity).transform.localScale = Vector3.one * atk.prefabScale;
+                    if (_cameraController != null) _cameraController.ShakeCamera(atk.shakeType);
+                }
+
+                Debug.Log($"Starting recovery phase: {atk.recoveryTime}s");
+                animator.CrossFade(recoveryStateName, animationTransitionDuration);
+                yield return new WaitForSeconds(atk.recoveryTime);
             }
-
-            yield return new WaitForSeconds(atk.recoveryTime);
         }
-
-        aiPath.enabled = true;
-        _isExecuting = false;
+        finally
+        {
+            Debug.Log("Skill execution completed");
+            animator.CrossFade(idleStateName, animationTransitionDuration);
+            if (aiPath != null) aiPath.enabled = true;
+            _isExecuting = false;
+        }
     }
 
     public void OnSkillFinished()
     {
+        if (_currentAttackRoutine != null)
+        {
+            StopCoroutine(_currentAttackRoutine);
+            _currentAttackRoutine = null;
+        }
+
+        if (animator != null)
+        {
+            animator.Play(idleStateName, -1, 0f);
+        }
+
         _isExecuting = false;
         aiPath.enabled = true;
     }

@@ -41,13 +41,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5462398091272074913}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0.026356062, z: -0, w: 0.9996526}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1.6, y: 1.6, z: 1.6}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -3.021, z: 0}
 --- !u!212 &6088753283061777097
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -374,6 +374,10 @@ MonoBehaviour:
   rangeMax: 150
   weight: 1
   category: 2
+  batteryImage: {fileID: 0}
+  bossAnimator: {fileID: 8281665427756539119}
+  darknessAnimationName: DarknessCast
+  animationSpeedMultiplier: 1
   sceneLighting: {fileID: 0}
   lockedBatteryColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &467114363602511782
@@ -388,7 +392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2f16215ef33bc14d92c480891aee4fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  castTime: 1.5
+  castTime: 2.5
   cooldown: 15
   bossAnimator: {fileID: 8281665427756539119}
   summonAnimationName: Summon
@@ -423,22 +427,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiPath: {fileID: 589897635521380619}
   attackPhases:
-  - chargeTime: 0.1
+  - chargeTime: 0.5
     speed: 30
     distance: 2
-    recoveryTime: 0.05
+    recoveryTime: 0.5
     xOffset: 2
     yOffset: -0.5
     prefabScale: 1.5
     shakeType: 1
-  - chargeTime: 0.05
+    attackStateName: Attack
+  - chargeTime: 0.5
     speed: 30
     distance: 2
-    recoveryTime: 0.1
+    recoveryTime: 0.5
     xOffset: 2
     yOffset: -0.5
     prefabScale: 1.5
     shakeType: 1
+    attackStateName: Attack
   - chargeTime: 0.5
     speed: 50
     distance: 3.5
@@ -447,9 +453,13 @@ MonoBehaviour:
     yOffset: -0.5
     prefabScale: 3
     shakeType: 2
+    attackStateName: Attack
   meleePrefab: {fileID: 2516510672788793949, guid: 2df3b2aae68d81140816462f018d3687, type: 3}
-  animator: {fileID: 0}
-  attackAnimName: Attack
+  animator: {fileID: 8281665427756539119}
+  chargeStateName: Charge
+  recoveryStateName: Recovery
+  idleStateName: Idle
+  animationTransitionDuration: 0.1
   cooldown: 1.5
   rangeMin: 0
   rangeMax: 5
@@ -482,7 +492,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 2895148491853310007, guid: 8e661ed046ca9b746aaf84c1971c9ea9, type: 3}
   projectileCount: 10
   xOffset: 4
-  yOffset: -1
+  yOffset: 0.6
   prefabScale: 1
 --- !u!114 &6701698480949332352
 MonoBehaviour:
@@ -499,7 +509,11 @@ MonoBehaviour:
   playerTag: Player
   playerCheckRadius: 150
   skillComponents:
+  - {fileID: -971031321253243047}
+  - {fileID: 467114363602511782}
+  - {fileID: 70280540170566239}
   - {fileID: -318689129864969342}
+  - {fileID: 6701698480949332352}
   initialDelay: 4
   meleeCategoryCooldown: 10
   rangedCategoryCooldown: 10

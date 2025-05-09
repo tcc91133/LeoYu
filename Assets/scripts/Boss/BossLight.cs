@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Pathfinding;
+using UnityEngine.UI;
 
 public class BossDarknessSkill : MonoBehaviour, IBossSkill
 {
@@ -11,6 +12,12 @@ public class BossDarknessSkill : MonoBehaviour, IBossSkill
     public float rangeMax = 15f;
     public float weight = 0.8f;
     public SkillCategory category = SkillCategory.Unrestricted;
+    [Header("电池UI控制")]
+    public Image batteryImage;
+    [Header("Animation Control")]
+    public Animator bossAnimator;
+    public string darknessAnimationName = "DarknessCast";
+    public float animationSpeedMultiplier = 1f;
 
     [Header("References")]
     public SceneLighting2D sceneLighting;
@@ -30,11 +37,23 @@ public class BossDarknessSkill : MonoBehaviour, IBossSkill
     public float RangeMax => rangeMax;
     public float Weight => weight;
 
-    void Awake()
+    private void Awake()
     {
         _aiPath = GetComponent<AIPath>();
+
+        // 自动获取引用
         if (sceneLighting == null)
             sceneLighting = FindObjectOfType<SceneLighting2D>();
+
+        if (bossAnimator == null)
+            bossAnimator = GetComponent<Animator>();
+
+        // 尝试自动获取电池Image
+        if (batteryImage == null && sceneLighting != null)
+        {
+            // 尝试通过场景灯光对象查找
+            batteryImage = sceneLighting.GetComponentInChildren<Image>();
+        }
     }
 
     void Update()
@@ -46,44 +65,51 @@ public class BossDarknessSkill : MonoBehaviour, IBossSkill
     public IEnumerator ExecuteSkill()
     {
         _isExecuting = true;
-
-        // 阶段1：准备施法
+        _cooldownTimer = cooldown;
         _aiPath.enabled = false;
 
-        // 设置Cast模式并保存当前电池状态
+        // 播放动画
+        if (bossAnimator != null)
+        {
+            bossAnimator.Play(darknessAnimationName, -1, 0f);
+            bossAnimator.speed = bossAnimator.GetCurrentAnimatorStateInfo(0).length / castTime;
+        }
+
+        // 设置电池颜色
+        if (batteryImage != null)
+        {
+            batteryImage.color = lockedBatteryColor;
+        }
+
+        // 原有场景灯光控制
         if (sceneLighting != null)
         {
-            _originalBatteryTime = sceneLighting.BatteryTimer;
             sceneLighting.IsInCastMode = true;
             sceneLighting.LockControls(true);
         }
 
-        // 蓄力等待
         yield return new WaitForSeconds(castTime);
 
-        // 阶段2：立即触发关灯
         if (sceneLighting != null)
             sceneLighting.ForceCompleteDarken();
 
-        // 阶段3：开始冷却
-        _cooldownTimer = cooldown;
-
-        // 阶段4：恢复
-        _aiPath.enabled = true;
-        _isExecuting = false;
-
-        // 解除Cast模式和锁定
-        if (sceneLighting != null)
-        {
-            sceneLighting.IsInCastMode = false;
-            sceneLighting.UnlockControls();
-        }
+        ResetSkillState();
     }
+
 
     public void OnSkillFinished()
     {
         StopAllCoroutines();
-        _isExecuting = false;
+        ResetSkillState();
+    }
+
+    private void ResetSkillState()
+    {
+        if (bossAnimator != null)
+        {
+            bossAnimator.speed = 1f;
+            bossAnimator.Play("Idle");
+        }
 
         if (_aiPath != null)
             _aiPath.enabled = true;
@@ -92,7 +118,13 @@ public class BossDarknessSkill : MonoBehaviour, IBossSkill
         {
             sceneLighting.IsInCastMode = false;
             sceneLighting.UnlockControls();
+
+            // 恢复电池颜色
+            if (batteryImage != null)
+                batteryImage.color = Color.white;
         }
+
+        _isExecuting = false;
     }
 
     private void OnDrawGizmosSelected()
@@ -102,4 +134,7 @@ public class BossDarknessSkill : MonoBehaviour, IBossSkill
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, rangeMin);
     }
+
+    // 动画事件调用点（可选）
+  
 }

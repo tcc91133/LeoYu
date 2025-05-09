@@ -105,7 +105,7 @@ TextureImporter:
         width: 72
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -113,27 +113,6 @@ TextureImporter:
       bones: []
       spriteID: be3e4ede8915e3344ab78a078bee2d7e
       internalID: 1147307995
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: demon_fire_breath_7_3
-      rect:
-        serializedVersion: 2
-        x: 209
-        y: 82
-        width: 2
-        height: 3
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: aef789ece90f9ce49868b518b4af1148
-      internalID: -720105782
       vertices: []
       indices: 
       edges: []
