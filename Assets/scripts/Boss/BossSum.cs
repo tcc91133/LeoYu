@@ -17,13 +17,12 @@ public class BossSummonSkill : MonoBehaviour, IBossSkill
     public float castTime = 2f;
     public float cooldown = 15f;
     public Animator bossAnimator;
-    public string summonAnimationName = "Summon"; // 单一动画名称
-
-    public float Cooldown => cooldown;
+    public string summonAnimationName = "Summon";
 
     [Header("Summon Settings")]
     public List<SummonPrefab> summonPrefabs = new List<SummonPrefab>();
     public float spawnInterval = 0.3f;
+    public CameraController.ShakeType summonShakeType = CameraController.ShakeType.Medium;
 
     [Header("Camera Bounds")]
     public Vector2 cameraMinBounds = new Vector2(-10, -5);
@@ -37,96 +36,80 @@ public class BossSummonSkill : MonoBehaviour, IBossSkill
 
     private AIPath aiPath;
     private bool isCasting;
+    private CameraController _cameraController;
+    private Transform _player;
 
-    void Awake()
-    {
-        aiPath = GetComponent<AIPath>();
-        if (bossAnimator == null)
-            bossAnimator = GetComponent<Animator>();
-    }
-
+    public float Cooldown => cooldown;
     public SkillCategory Category => category;
     public float RangeMin => rangeMin;
     public float RangeMax => rangeMax;
     public float Weight => weight;
-    public bool IsAvailable => !isCasting;
+    public bool IsAvailable => !isCasting && _cooldownTimer <= 0f;
+    private float _cooldownTimer;
+
+    void Awake()
+    {
+        aiPath = GetComponent<AIPath>();
+        _player = GameObject.FindWithTag("Player")?.transform;
+        _cameraController = Camera.main?.GetComponent<CameraController>();
+        if (bossAnimator == null) bossAnimator = GetComponent<Animator>();
+    }
+
+    void Update()
+    {
+        if (_cooldownTimer > 0f)
+            _cooldownTimer -= Time.deltaTime;
+    }
 
     public IEnumerator ExecuteSkill()
     {
         isCasting = true;
+        _cooldownTimer = cooldown;
         aiPath.enabled = false;
 
-        // 1. 动画系统重置（安全版）
-        if (bossAnimator != null)
+        if (_cameraController != null)
         {
-            bossAnimator.Rebind();
-            yield return null; // 确保重置完成
-            bossAnimator.Play("EmptyState", 0, 0); // 过渡空状态
-            yield return null;
-
-            // 精确控制动画播放
-            AnimatorStateInfo state = bossAnimator.GetCurrentAnimatorStateInfo(0);
-            float speedMultiplier = state.length / castTime;
-            bossAnimator.Play(summonAnimationName, 0, 0f);
-            bossAnimator.speed = speedMultiplier;
-
-            Debug.Log($"动画长度: {state.length} 速度系数: {speedMultiplier}");
+            _cameraController.ShakeCamera(summonShakeType);
+            Debug.Log("Summon skill camera shake triggered");
         }
 
-        // 2. 生成位置预检测
-        List<Vector2> validSpawnPositions = new List<Vector2>();
+        if (bossAnimator != null)
+        {
+            bossAnimator.Play(summonAnimationName);
+            bossAnimator.speed = 1f;
+        }
+
+        StartCoroutine(SummonCoroutine());
+
+        yield return new WaitForSeconds(castTime);
+
+        if (bossAnimator != null)
+            bossAnimator.Play("Idle");
+
+        isCasting = false;
+        aiPath.enabled = true;
+    }
+
+    private IEnumerator SummonCoroutine()
+    {
         foreach (var summon in summonPrefabs)
         {
             for (int i = 0; i < summon.count; i++)
             {
                 Vector2 spawnPos = GetValidSpawnPosition(summon.spawnRadius);
-                if (!Physics2D.OverlapCircle(spawnPos, 0.5f))
-                {
-                    validSpawnPositions.Add(spawnPos);
-                    Debug.DrawRay(spawnPos, Vector2.up, Color.green, 2f);
-                }
+                Instantiate(summon.prefab, spawnPos, Quaternion.identity);
+                yield return new WaitForSeconds(spawnInterval);
             }
         }
-
-        // 3. 同步动画与生成
-        float timer = 0;
-        int spawnIndex = 0;
-        while (timer < castTime)
-        {
-            timer += Time.deltaTime;
-
-            // 按进度生成敌人
-            if (spawnIndex < validSpawnPositions.Count &&
-                timer >= (castTime * spawnIndex / validSpawnPositions.Count))
-            {
-                Instantiate(
-                    summonPrefabs[0].prefab, // 假设使用第一个预制件
-                    validSpawnPositions[spawnIndex],
-                    Quaternion.identity
-                );
-                spawnIndex++;
-            }
-
-            yield return null;
-        }
-
-        // 4. 强制状态重置
-        if (bossAnimator != null)
-        {
-            bossAnimator.speed = 1;
-            bossAnimator.Play("Idle", 0, 0.9f); // 直接跳到动画末尾
-        }
-
-        isCasting = false;
-        aiPath.enabled = true;
     }
 
     public void OnSkillFinished()
     {
         if (isCasting)
         {
+            StopAllCoroutines();
             if (bossAnimator != null)
-                bossAnimator.Play("Idle"); // 强制回到待机状态
+                bossAnimator.Play("Idle");
             aiPath.enabled = true;
             isCasting = false;
         }
@@ -135,17 +118,12 @@ public class BossSummonSkill : MonoBehaviour, IBossSkill
     private Vector2 GetValidSpawnPosition(float radiusScale)
     {
         Vector2 center = (cameraMinBounds + cameraMaxBounds) * 0.5f;
-        Vector2 scaledMin = center + (cameraMinBounds - center) * radiusScale;
-        Vector2 scaledMax = center + (cameraMaxBounds - center) * radiusScale;
-
-        int side = Random.Range(0, 4);
-        return side switch
-        {
-            0 => new Vector2(Random.Range(scaledMin.x, scaledMax.x), scaledMax.y),
-            1 => new Vector2(scaledMax.x, Random.Range(scaledMin.y, scaledMax.y)),
-            2 => new Vector2(Random.Range(scaledMin.x, scaledMax.x), scaledMin.y),
-            _ => new Vector2(scaledMin.x, Random.Range(scaledMin.y, scaledMax.y)),
-        };
+        Vector2 size = cameraMaxBounds - cameraMinBounds;
+        Vector2 randomPoint = center + new Vector2(
+            (Random.value - 0.5f) * size.x * radiusScale,
+            (Random.value - 0.5f) * size.y * radiusScale
+        );
+        return randomPoint;
     }
 
     private void OnDrawGizmosSelected()

@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 6701698480949332352}
   - component: {fileID: 8281665427756539119}
   m_Layer: 7
-  m_Name: Capsule
+  m_Name: Boss
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -256,7 +256,7 @@ MonoBehaviour:
   radius: 0.5
   height: 2
   canMove: 1
-  maxSpeed: 6
+  maxSpeed: 6.5
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -322,6 +322,13 @@ MonoBehaviour:
   - {fileID: 1203867063886572898, guid: bbf320b716b20584eba506463d5d89fd, type: 3}
   damageAmount: 999
   shouldKnockBack: 1
+  healthBarPrefab: {fileID: 7857262101510238931, guid: a5282433fda7d9e4693f08cce841a976, type: 3}
+  healthBarParent: {fileID: 0}
+  canvasTag: UICanvas
+  healthBarOffset: {x: 0, y: 0, z: 0}
+  damageFlashColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 1
+  shakeType: 0
 --- !u!114 &-971031321253243047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,7 +347,7 @@ MonoBehaviour:
   jumpHeightOffset: 5
   hangTime: 0.1
   recoveryTime: 1.25
-  cooldown: 7
+  cooldown: 8
   arcHeight: 1.25
   rangeMin: 3
   rangeMax: 15
@@ -369,7 +376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   castTime: 3
-  cooldown: 15
+  cooldown: 25
   rangeMin: 0
   rangeMax: 150
   weight: 1
@@ -393,7 +400,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   castTime: 2.5
-  cooldown: 15
+  cooldown: 20
   bossAnimator: {fileID: 8281665427756539119}
   summonAnimationName: Summon
   summonPrefabs:
@@ -407,6 +414,7 @@ MonoBehaviour:
     count: 5
     spawnRadius: 1
   spawnInterval: 0.3
+  summonShakeType: 0
   cameraMinBounds: {x: -12.4, y: -18.5}
   cameraMaxBounds: {x: 12.8, y: 14.8}
   category: 2
@@ -431,8 +439,8 @@ MonoBehaviour:
     speed: 30
     distance: 2
     recoveryTime: 0.5
-    xOffset: 2
-    yOffset: -0.5
+    xOffset: 3
+    yOffset: -1
     prefabScale: 1.5
     shakeType: 1
     attackStateName: Attack
@@ -440,8 +448,8 @@ MonoBehaviour:
     speed: 30
     distance: 2
     recoveryTime: 0.5
-    xOffset: 2
-    yOffset: -0.5
+    xOffset: 3
+    yOffset: -1
     prefabScale: 1.5
     shakeType: 1
     attackStateName: Attack
@@ -449,8 +457,8 @@ MonoBehaviour:
     speed: 50
     distance: 3.5
     recoveryTime: 0.5
-    xOffset: 2
-    yOffset: -0.5
+    xOffset: 4
+    yOffset: -1
     prefabScale: 3
     shakeType: 2
     attackStateName: Attack
@@ -460,7 +468,7 @@ MonoBehaviour:
   recoveryStateName: Recovery
   idleStateName: Idle
   animationTransitionDuration: 0.1
-  cooldown: 1.5
+  cooldown: 4
   rangeMin: 0
   rangeMax: 5
   weight: 10
@@ -486,7 +494,7 @@ MonoBehaviour:
   shootAnimationName: Shoot
   animationSpeedMultiplier: 1
   rangeMin: 8
-  rangeMax: 15
+  rangeMax: 20
   weight: 1
   category: 1
   projectilePrefab: {fileID: 2895148491853310007, guid: 8e661ed046ca9b746aaf84c1971c9ea9, type: 3}
@@ -513,12 +521,12 @@ MonoBehaviour:
   - {fileID: 467114363602511782}
   - {fileID: 70280540170566239}
   - {fileID: -318689129864969342}
-  - {fileID: 6701698480949332352}
+  - {fileID: -1836356536026873766}
   initialDelay: 4
-  meleeCategoryCooldown: 10
-  rangedCategoryCooldown: 10
-  unrestrictedCategoryCooldown: 10
-  delayAfterMeleeOrRanged: 1
+  meleeCategoryCooldown: 6
+  rangedCategoryCooldown: 15
+  unrestrictedCategoryCooldown: 20
+  delayAfterMeleeOrRanged: 8
 --- !u!95 &8281665427756539119
 Animator:
   serializedVersion: 5

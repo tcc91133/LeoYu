@@ -2018,13 +2018,6 @@ MonoBehaviour:
   maxSpawnDistance: 1
   waveDuration: 20
   waves:
-  - name: Wave10
-    segments:
-    - tStartEnd: {x: 0, y: 50}
-      spawnFrequency: 0
-      prefub: {fileID: 5462398091272074913, guid: 2519a95541f84f741aea36ead4265965, type: 3}
-      spawnImmediately: 1
-      immediateSpawnCount: 1
   - name: Wave00
     segments:
     - tStartEnd: {x: 0, y: 50}
@@ -2155,6 +2148,13 @@ MonoBehaviour:
       prefub: {fileID: 1203867063886572898, guid: bbf320b716b20584eba506463d5d89fd, type: 3}
       spawnImmediately: 0
       immediateSpawnCount: 0
+  - name: Wave10
+    segments:
+    - tStartEnd: {x: 0, y: 50}
+      spawnFrequency: 0
+      prefub: {fileID: 5462398091272074913, guid: 2519a95541f84f741aea36ead4265965, type: 3}
+      spawnImmediately: 1
+      immediateSpawnCount: 1
   completeManager: {fileID: 826918380}
 --- !u!4 &160582747
 Transform:
@@ -7467,7 +7467,7 @@ MonoBehaviour:
       m_RotationOrder: 4
   mediumShake:
     duration: 0.3
-    magnitude: 0.175
+    magnitude: 0.2
     decayCurve:
       serializedVersion: 2
       m_Curve:
@@ -8433,18 +8433,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed:
   - cost: 0
-    value: 10
-  - cost: 5
     value: 6
   - cost: 5
     value: 7
+  - cost: 5
+    value: 8
   health:
   - cost: 0
-    value: 500
-  - cost: 10
     value: 55
   - cost: 10
-    value: 60
+    value: 65
+  - cost: 10
+    value: 75
   pickupRange:
   - cost: 0
     value: 2
@@ -16308,7 +16308,7 @@ GameObject:
   - component: {fileID: 1291393055}
   m_Layer: 5
   m_Name: UI Canvas
-  m_TagString: Untagged
+  m_TagString: UICanvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

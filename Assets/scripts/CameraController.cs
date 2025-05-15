@@ -52,7 +52,6 @@ public class CameraController : MonoBehaviour
         {
             ShakeSettings settings = GetShakeSettings(type);
             StartCoroutine(Shake(settings.duration, settings.magnitude, settings.decayCurve));
-
         }
     }
 

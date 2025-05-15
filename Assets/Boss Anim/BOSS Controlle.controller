@@ -88,7 +88,7 @@ AnimatorStateMachine:
     m_Position: {x: 30, y: -210, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1379931703914380583}
-    m_Position: {x: 30, y: -280, z: 0}
+    m_Position: {x: 40, y: -280, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8526086970461726921}
     m_Position: {x: 600, y: -70, z: 0}
@@ -195,7 +195,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: DarknessCast
-  m_Speed: 1
+  m_Speed: 1.8
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -526,7 +526,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Summon
-  m_Speed: 2
+  m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -577,7 +577,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Attack
-  m_Speed: 1
+  m_Speed: 2.5
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []

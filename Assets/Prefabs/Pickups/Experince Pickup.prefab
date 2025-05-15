@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 8319113634090334737}
   m_Layer: 0
   m_Name: Experince Pickup
-  m_TagString: Untagged
+  m_TagString: PickUps
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
