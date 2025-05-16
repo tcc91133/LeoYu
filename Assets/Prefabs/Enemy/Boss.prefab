@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6677632097860470239}
   - component: {fileID: 6088753283061777097}
+  - component: {fileID: 5065530648139848166}
   - component: {fileID: 8103840887358850357}
   - component: {fileID: 8637472342953283885}
   - component: {fileID: 4137664655552903509}
@@ -100,6 +101,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5065530648139848166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5462398091272074913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da539ba972716ae448c393f44935fee0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossAnimator: {fileID: 8281665427756539119}
+  entranceAnimationName: Entrance
+  animationSpeedMultiplier: 1
+  playerTag: Player
 --- !u!70 &8103840887358850357
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
