@@ -87,10 +87,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1913630117
+  m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1184428145, guid: e856a1d2d15fb6648acd288631af3577, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,7 +98,7 @@ SpriteRenderer:
   m_Size: {x: 2.2857144, y: 2.7428572}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &5065530648139848166
@@ -342,7 +342,7 @@ MonoBehaviour:
   - {fileID: 1203867063886572898, guid: bbf320b716b20584eba506463d5d89fd, type: 3}
   damageAmount: 999
   shouldKnockBack: 1
-  healthBarPrefab: {fileID: 7857262101510238931, guid: a5282433fda7d9e4693f08cce841a976, type: 3}
+  healthBarPrefab: {fileID: 2689589204252994061, guid: 64a769f08878b494c8e61c4bbc44bf24, type: 3}
   healthBarParent: {fileID: 0}
   canvasTag: UICanvas
   healthBarOffset: {x: 0, y: 0, z: 0}

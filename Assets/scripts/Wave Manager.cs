@@ -149,8 +149,9 @@ public class WaveManager : MonoBehaviour
         {
             isFinalWave = true;
             ui.UpdateTimerText("");
-            ui.UpdateWaveText("波次完成，擊敗boss");
+            ui.UpdateWaveText("波次完成\n擊敗boss"); // 這行已經立即執行
 
+            // 如果還需要檢查敵人是否被清除，可以立即呼叫
             if (completeManager != null)
             {
                 completeManager.CheckEnemiesCleared(isFinalWave);
