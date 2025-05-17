@@ -116,7 +116,10 @@ MonoBehaviour:
   bossAnimator: {fileID: 8281665427756539119}
   entranceAnimationName: Entrance
   animationSpeedMultiplier: 1
+  zoomSize: 5
+  zoomDuration: 0.5
   playerTag: Player
+  sceneLighting: {fileID: 0}
 --- !u!70 &8103840887358850357
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

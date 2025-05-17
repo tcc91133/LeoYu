@@ -149,7 +149,7 @@ public class WaveManager : MonoBehaviour
         {
             isFinalWave = true;
             ui.UpdateTimerText("");
-            ui.UpdateWaveText("波次完成，擊敗所有敵人");
+            ui.UpdateWaveText("波次完成，擊敗boss");
 
             if (completeManager != null)
             {

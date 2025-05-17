@@ -276,4 +276,19 @@ public class SceneLighting2D : MonoBehaviour
 
         batteryFillImage.color = normalBatteryColor;
     }
+    public void ResetLighting()
+    {
+        ResetBattery();
+        StartBrightening();
+
+        // 重置相关状态
+        isLocked = false;
+        isFlashing = false;
+
+        if (flashCoroutine != null)
+            StopCoroutine(flashCoroutine);
+
+        if (batteryFillImage != null)
+            batteryFillImage.color = normalBatteryColor;
+    }
 }

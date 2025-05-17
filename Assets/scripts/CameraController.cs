@@ -86,4 +86,18 @@ public class CameraController : MonoBehaviour
         shakeOffset = Vector3.zero;
         isShaking = false;
     }
+    public void SetTarget(Transform newTarget)
+    {
+        target = newTarget;
+    }
+
+    // ✅ 新增：回到預設玩家
+    public void ResetToPlayer()
+    {
+        PlayerController player = FindObjectOfType<PlayerController>();
+        if (player != null)
+        {
+            target = player.transform;
+        }
+    }
 }
